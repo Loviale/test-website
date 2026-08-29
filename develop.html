@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>研发中心</title>
+    <link rel="stylesheet" href="./style/bootstrap.min.css">
+    <link rel="stylesheet" href="./style/header.css">
+    <link rel="stylesheet" href="./style/footer.css">
+    <link rel="shortcut icon" href="./img/favicon.png" type="image/x-icon">
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            background: #ebebeb;
+            font-family: Arial, Helvetica, sans-serif;
+        }
+
+        img {
+            display: block;
+        }
+
+        .sidebar {
+            background: #fff;
+            padding: 20px;
+            position: relative;
+            min-height: 400px;
+        }
+
+        .sidebar .big {
+            width: 100%;
+            height: auto;
+        }
+
+        .sidebar .small {
+            width: 55px;
+            height: auto;
+            margin-left: 20px;
+        }
+
+        .left-nav {
+            position: absolute;
+            right: 70px;
+            top: 140px;
+            display: flex;
+            flex-direction: column;
+            gap: 25px;
+            font-weight: bold;
+        }
+
+        .left-nav div {
+            cursor: pointer;
+            transition: color 0.2s;
+        }
+
+        .left-nav div.active,
+        .left-nav div:hover {
+            color: #0081a2;
+        }
+
+        .left-nav div:only-child {
+            color: #0081a2;
+        }
+
+        .content-area {
+            background: #fff;
+            padding: 40px 36px;
+            min-height: 400px;
+            border-radius: 4px;
+        }
+
+        .comp-research-title {
+            font-size: 20px;
+            color: #00aeb9;
+            margin-bottom: 16px;
+        }
+
+        .comp-research-content {
+            font-size: 15px;
+            color: #000;
+            text-indent: 2em;
+            line-height: 1.8;
+        }
+
+        .comp-research-content p {
+            text-indent: 2em;
+            margin-bottom: 10px;
+        }
+
+        @media (max-width: 991.98px) {
+            .left-nav {
+                position: static;
+                flex-direction: row;
+                flex-wrap: wrap;
+                gap: 12px;
+                margin-top: 16px;
+            }
+
+            .sidebar .small {
+                display: none;
+            }
+
+            .content-area {
+                padding: 24px 18px;
+            }
+        }
+
+        @media (max-width: 575px) {
+            .content-area {
+                padding: 16px 12px;
+            }
+
+            .comp-research-title {
+                font-size: 17px;
+            }
+
+            .comp-research-content {
+                font-size: 14px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <div id="app"></div>
+
+    <img id="pageBanner" src="./img/main03.png" class="w-100" alt="横幅" style="margin-top:-70px">
+
+    <main class="container-xl my-3 my-lg-4">
+        <div class="row g-3 g-lg-4">
+
+            <div class="col-lg-3 d-none d-lg-block">
+                <div class="sidebar">
+                    <img class="big" src="./img/research/research.png" alt="">
+                    <img class="small" src="./img/research/researchTree.png" alt="">
+                    <div class="left-nav" id="leftNav">
+                        <div class="active" data-index="0">研发中心</div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-12 col-lg-9">
+                <div class="content-area rounded">
+                    <div class="comp-research-title">企业研发中心</div>
+                    <div class="comp-research-content">
+                        <p>
+                            公司于2011年年底获准成立山东省新兽药添加剂工程技术研究中心，本中心联合国内多所知名院校，主要研究对畜禽健康有益的绿色新型兽药添加剂以及兽药新制剂。
+                            包括中兽药添加剂、兽药制剂、禽药制剂、微生态制剂等。
+                            本中心的主要任务是以本着提高药效、减低副作用、改善用药顺应性、降低研制成本、提高畜产品质量安全的原则，以制备、推广安全、有效、稳定、使用方便的GSP药物制剂为目的，从多种剂型，多种给药新途径和新方法考虑开发绿色新型制剂，研发最新兽药制剂和添加剂生产技术并加以推广应用。
+                        </p>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </main>
+
+    <script src="./lib/jquery4.0.0.min.js"></script>
+    <script src="./lib/popper.min.js"></script>
+    <script src="./lib/bootstrap.min.js"></script>
+    <script src="./js/mod_header.js"></script>
+    <script src="./js/mod_footer.js"></script>
+
+</body>
+
+</html>

@@ -1,0 +1,514 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>新闻动态</title>
+    <link rel="stylesheet" href="./style/bootstrap.min.css">
+    <link rel="stylesheet" href="./style/header.css">
+    <link rel="stylesheet" href="./style/footer.css">
+    <link rel="shortcut icon" href="./img/favicon.png" type="image/x-icon">
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            background: #ebebeb;
+            font-family: Arial, Helvetica, sans-serif;
+        }
+
+        img {
+            display: block;
+        }
+
+        .sidebar {
+            background: #fff;
+            padding: 20px;
+            position: relative;
+        }
+
+        .sidebar .big {
+            width: 100%;
+            height: auto;
+        }
+
+        .sidebar .small {
+            width: 55px;
+            height: auto;
+            margin-left: 20px;
+        }
+
+        .left-nav {
+            position: absolute;
+            right: 70px;
+            top: 140px;
+            display: flex;
+            flex-direction: column;
+            gap: 25px;
+            font-weight: bold;
+        }
+
+        .left-nav div {
+            cursor: pointer;
+            transition: color 0.2s;
+        }
+
+        .left-nav div.active,
+        .left-nav div:hover {
+            color: #0081a2;
+        }
+
+        .mobile-nav {
+            background: #fff;
+            padding: 12px 16px;
+            overflow-x: auto;
+            white-space: nowrap;
+            -webkit-overflow-scrolling: touch;
+        }
+
+        .mobile-nav .btn {
+            font-size: 14px;
+        }
+
+        .mobile-nav .btn.active,
+        .mobile-nav .btn-check:checked+.btn {
+            background-color: #0081a2;
+            border-color: #0081a2;
+            color: #fff;
+        }
+
+        .content-area {
+            background: #fff;
+            padding: 20px;
+            min-height: 400px;
+        }
+
+        /* ===== 新闻列表 ===== */
+        .comp-news-list {
+            display: flex;
+            flex-direction: column;
+            gap: 16px;
+        }
+
+        .comp-news-item {
+            display: flex;
+            align-items: stretch;
+            gap: 16px;
+            padding: 16px;
+            border: 1px solid #eee;
+            border-radius: 8px;
+        }
+
+        .comp-news-img {
+            width: 28%;
+            flex-shrink: 0;
+            border-radius: 6px;
+            overflow: hidden;
+        }
+
+        .comp-news-img img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            display: block;
+            aspect-ratio: 16/10;
+        }
+
+        .comp-news-info {
+            flex: 1;
+            min-width: 0;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+        }
+
+        .comp-news-title {
+            font-size: 17px;
+            color: #000;
+            font-weight: bold;
+            margin-bottom: 8px;
+            display: -webkit-box;
+            -webkit-line-clamp: 1;
+            -webkit-box-orient: vertical;
+            overflow: hidden;
+        }
+
+        .comp-news-desc {
+            font-size: 15px;
+            color: #000;
+            line-height: 1.6;
+            display: -webkit-box;
+            -webkit-line-clamp: 2;
+            -webkit-box-orient: vertical;
+            overflow: hidden;
+            margin-bottom: 10px;
+            flex: 1;
+        }
+
+        .comp-news-bottom {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .comp-news-btn {
+            font-size: 14px;
+            color: #666;
+            border: 1px solid #a2a2a2;
+            border-radius: 5px;
+            padding: 3px 10px;
+            background: transparent;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .comp-news-btn:hover {
+            color: #0081a2;
+            border-color: #0081a2;
+        }
+
+        .comp-news-time {
+            font-size: 14px;
+            color: #666;
+        }
+
+        /* ===== 视频列表 ===== */
+        .comp-news-video-list {
+            display: flex;
+            flex-direction: column;
+            gap: 24px;
+        }
+
+        .comp-news-video-item {
+            border: 1px solid #eee;
+            border-radius: 8px;
+            overflow: hidden;
+        }
+
+        .comp-news-video-item video {
+            width: 100%;
+            display: block;
+            aspect-ratio: 16/9;
+            background: #000;
+        }
+
+        .comp-news-video-title {
+            padding: 12px 16px;
+            font-size: 16px;
+            font-weight: bold;
+            color: #333;
+        }
+
+        /* ===== 分页 ===== */
+        .pagination-wrap {
+            display: flex;
+            justify-content: center;
+            padding-top: 20px;
+            margin-top: 16px;
+            border-top: 1px solid #eee;
+        }
+
+        .pagination-wrap .page-link {
+            color: #333;
+        }
+
+        .pagination-wrap .page-item.active .page-link {
+            background-color: #0081a2;
+            border-color: #0081a2;
+            color: #fff;
+        }
+
+        .pagination-wrap .page-item.disabled .page-link {
+            color: #ccc;
+        }
+
+        /* ===== 空状态 ===== */
+        .empty-state {
+            text-align: center;
+            padding: 60px 0;
+            color: #999;
+        }
+
+        @media (max-width: 991.98px) {
+            .left-nav {
+                position: static;
+                flex-direction: row;
+                flex-wrap: wrap;
+                gap: 12px;
+                margin-top: 16px;
+            }
+
+            .sidebar .small {
+                display: none;
+            }
+        }
+
+        @media (max-width: 575.98px) {
+            .comp-news-item {
+                flex-direction: column;
+            }
+
+            .comp-news-img {
+                width: 100%;
+                height: 160px;
+            }
+
+            .comp-news-video-list {
+                gap: 16px;
+            }
+
+            .comp-news-video-item video {
+                aspect-ratio: 16/9;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <div id="app"></div>
+
+    <img id="pageBanner" src="./img/main02.png" class="w-100" alt="横幅" style="margin-top:-70px">
+
+    <main class="container-xl my-3 my-lg-4">
+        <div class="row g-3 g-lg-4">
+            <!-- 大屏 -->
+            <div class="col-lg-3 d-none d-lg-block">
+                <div class="sidebar">
+                    <img class="big" src="./img/news/news.png" alt="">
+                    <img class="small" src="./img/news/newsTree.png" alt="">
+                    <div class="left-nav" id="leftNav">
+                        <div class="active" data-index="0">公司动态</div>
+                        <div data-index="1">行业动态</div>
+                        <div data-index="2">视频短片</div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-12 col-lg-9">
+                <!-- 小屏 -->
+                <div class="mobile-nav d-lg-none mb-3 rounded" id="mobileNav">
+                    <div class="btn-group flex-nowrap" role="group">
+                        <button type="button" class="btn btn-outline-secondary btn-sm active"
+                            data-index="0">公司动态</button>
+                        <button type="button" class="btn btn-outline-secondary btn-sm" data-index="1">行业动态</button>
+                        <button type="button" class="btn btn-outline-secondary btn-sm" data-index="2">视频短片</button>
+                    </div>
+                </div>
+
+                <div class="content-area rounded" id="contentArea"></div>
+            </div>
+
+        </div>
+    </main>
+
+    <script src="./lib/jquery4.0.0.min.js"></script>
+    <script src="./lib/popper.min.js"></script>
+    <script src="./lib/bootstrap.min.js"></script>
+    <script src="./js/mod_header.js"></script>
+    <script src="./js/mod_footer.js"></script>
+
+    <script>
+        (function () {
+            'use strict';
+
+            const CATEGORIES = [
+                { key: 'company', label: '公司动态', json: './mock/newsData/company.json', imgDir: './img/news/company/' },
+                { key: 'industry', label: '行业动态', json: './mock/newsData/industry.json', imgDir: './img/news/industry/' },
+                { key: 'video', label: '视频短片', json: './mock/newsData/video.json', imgDir: '' }
+            ];
+
+            const PAGE_SIZE = 5;
+
+            const contentArea = document.getElementById('contentArea');
+            const leftNav = document.getElementById('leftNav');
+            const mobileNavGroup = document.querySelector('#mobileNav .btn-group');
+
+            const cache = {};
+            let currentIndex = 0;
+            let currentPage = 1;
+            let totalPages = 1;
+
+            function getText(item) {
+                const entry = (item.main || []).find(m => m.type === 'text');
+                return entry ? entry.value : '';
+            }
+
+            function getCover(item, imgDir) {
+                return (imgDir || '') + (item.coverImage || '');
+            }
+
+
+            function renderNewsList(data, imgDir, fullList) {
+                if (!data || data.length === 0) {
+                    contentArea.innerHTML = '<div class="empty-state">暂无新闻</div>';
+                    return;
+                }
+
+                const items = data.map(item => `
+                    <div class="comp-news-item">
+                        <div class="comp-news-img">
+                            <img src="${getCover(item, imgDir)}" alt="${item.title || ''}" 
+                                 onerror="this.src='./img/news/404.png'">
+                        </div>
+                        <div class="comp-news-info">
+                            <div class="comp-news-title">${item.title || ''}</div>
+                            <div class="comp-news-desc">${getText(item)}</div>
+                            <div class="comp-news-bottom">
+                                <button class="comp-news-btn" data-item='${JSON.stringify(item).replace(/'/g, "&#39;")}' 
+                                        data-list='${JSON.stringify(fullList || data).replace(/'/g, "&#39;")}'>
+                                    阅读全文
+                                </button>
+                                <span class="comp-news-time">${item.time || ''}</span>
+                            </div>
+                        </div>
+                    </div>
+                `).join('');
+
+                const paginationHTML = `
+                    <div class="pagination-wrap">
+                        <ul class="pagination">
+                            <li class="page-item ${currentPage <= 1 ? 'disabled' : ''}">
+                                <a class="page-link" href="#" data-page="${currentPage - 1}">上一页</a>
+                            </li>
+                            ${Array.from({ length: totalPages }, (_, i) => `
+                                <li class="page-item ${i + 1 === currentPage ? 'active' : ''}">
+                                    <a class="page-link" href="#" data-page="${i + 1}">${i + 1}</a>
+                                </li>
+                            `).join('')}
+                            <li class="page-item ${currentPage >= totalPages ? 'disabled' : ''}">
+                                <a class="page-link" href="#" data-page="${currentPage + 1}">下一页</a>
+                            </li>
+                        </ul>
+                    </div>
+                `;
+
+                contentArea.innerHTML = `
+                    <div class="comp-news-list">${items}</div>
+                    ${totalPages > 1 ? paginationHTML : ''}
+                `;
+
+                contentArea.querySelectorAll('.comp-news-btn').forEach(btn => {
+                    btn.addEventListener('click', function () {
+                        const item = JSON.parse(this.dataset.item);
+                        const list = JSON.parse(this.dataset.list);
+                        localStorage.setItem('pageDetail', JSON.stringify({ ...item, from: '新闻动态' }));
+                        localStorage.setItem('pageDetailList', JSON.stringify(list));
+                        location.href = './newsDetail.html';
+                    });
+                });
+
+                contentArea.querySelectorAll('.page-link').forEach(link => {
+                    link.addEventListener('click', function (e) {
+                        e.preventDefault();
+                        const page = parseInt(this.dataset.page, 10);
+                        if (page >= 1 && page <= totalPages && page !== currentPage) {
+                            currentPage = page;
+                            loadCategory(currentIndex);
+                        }
+                    });
+                });
+            }
+
+            function renderVideoList(data) {
+                if (!data || data.length === 0) {
+                    contentArea.innerHTML = '<div class="empty-state">暂无视频</div>';
+                    return;
+                }
+
+                const items = data.map(item => `
+                    <div class="comp-news-video-item">
+                        <video controls preload="metadata">
+                            <source src="./${item.src || ''}" type="video/mp4">
+                        </video>
+                        <div class="comp-news-video-title">${item.title || ''}</div>
+                    </div>
+                `).join('');
+
+                contentArea.innerHTML = `<div class="comp-news-video-list">${items}</div>`;
+            }
+
+            function loadCategory(index) {
+                currentIndex = index;
+                const cat = CATEGORIES[index];
+                if (!cat) return;
+
+                leftNav.querySelectorAll('div').forEach((el, i) => {
+                    el.classList.toggle('active', i === index);
+                });
+                mobileNavGroup.querySelectorAll('.btn').forEach((btn, i) => {
+                    btn.classList.toggle('active', i === index);
+                });
+
+                if (cache[cat.key]) {
+                    renderByCategory(cat, cache[cat.key]);
+                    return;
+                }
+
+                fetch(cat.json)
+                    .then(res => {
+                        if (!res.ok) throw new Error('加载失败');
+                        return res.json();
+                    })
+                    .then(data => {
+                        cache[cat.key] = data;
+                        renderByCategory(cat, data);
+                    })
+                    .catch(() => {
+                        contentArea.innerHTML = '<div class="empty-state">内容加载失败，请刷新重试</div>';
+                    });
+            }
+
+            function renderByCategory(cat, data) {
+                if (cat.key === 'video') {
+                    renderVideoList(data);
+                    return;
+                }
+
+                totalPages = Math.ceil(data.length / PAGE_SIZE);
+                if (currentPage > totalPages) currentPage = totalPages || 1;
+
+                const start = (currentPage - 1) * PAGE_SIZE;
+                const end = Math.min(start + PAGE_SIZE, data.length);
+                const pageData = data.slice(start, end);
+
+                renderNewsList(pageData, cat.imgDir, data);
+            }
+
+
+            leftNav.addEventListener('click', function (e) {
+                const el = e.target.closest('div[data-index]');
+                if (!el) return;
+                const index = parseInt(el.dataset.index, 10);
+                currentPage = 1;
+                loadCategory(index);
+            });
+
+            mobileNavGroup.addEventListener('click', function (e) {
+                const btn = e.target.closest('.btn[data-index]');
+                if (!btn) return;
+                const index = parseInt(btn.dataset.index, 10);
+                currentPage = 1;
+                loadCategory(index);
+            });
+
+            const urlParams = new URLSearchParams(location.search);
+            const targetIndex = parseInt(urlParams.get('index'), 10);
+            const startIndex = (!isNaN(targetIndex) && targetIndex >= 0 && targetIndex < CATEGORIES.length)
+                ? targetIndex
+                : 0;
+
+            currentPage = 1;
+            loadCategory(startIndex);
+
+        })();
+    </script>
+
+</body>
+
+</html>

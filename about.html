@@ -1,0 +1,459 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>关于京信</title>
+    <link rel="stylesheet" href="./style/bootstrap.min.css">
+    <link rel="stylesheet" href="./style/header.css">
+    <link rel="stylesheet" href="./style/footer.css">
+    <link rel="shortcut icon" href="./img/favicon.png" type="image/x-icon">
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            background: #ebebeb;
+            font-family: Arial, Helvetica, sans-serif;
+        }
+
+        img {
+            display: block;
+        }
+
+        .sidebar {
+            background: #fff;
+            padding: 20px;
+            position: relative;
+        }
+
+        .sidebar .big {
+            width: 100%;
+            height: auto;
+        }
+
+        .sidebar .small {
+            width: 55px;
+            height: auto;
+            margin-left: 20px;
+        }
+
+        .left-nav {
+            position: absolute;
+            right: 70px;
+            top: 140px;
+            display: flex;
+            flex-direction: column;
+            gap: 25px;
+            font-weight: bold;
+        }
+
+        .left-nav div {
+            cursor: pointer;
+            transition: color 0.2s;
+        }
+
+        .left-nav div.active {
+            color: #0081a2;
+        }
+
+        .left-nav div:hover {
+            color: #0081a2;
+        }
+
+        .mobile-nav {
+            background: #fff;
+            padding: 12px 16px;
+            overflow-x: auto;
+            white-space: nowrap;
+            -webkit-overflow-scrolling: touch;
+        }
+
+        .mobile-nav .btn {
+            font-size: 14px;
+        }
+
+        .mobile-nav .btn.active,
+        .mobile-nav .btn-check:checked+.btn {
+            background-color: #0081a2;
+            border-color: #0081a2;
+            color: #fff;
+        }
+
+        .content-area {
+            background: #fff;
+            padding: 20px;
+            min-height: 400px;
+        }
+
+        .comp-about-title {
+            font-size: 22px;
+            font-weight: bold;
+            color: #333;
+            padding-bottom: 12px;
+            border-bottom: 2px solid #0081a2;
+            margin-bottom: 16px;
+        }
+
+        .comp-about-body p {
+            font-size: 15px;
+            color: #000;
+            line-height: 2;
+            text-align: justify;
+            text-indent: 2em;
+            margin-bottom: 12px;
+        }
+
+        .about-page {
+            display: none;
+        }
+
+        .about-page.active {
+            display: block;
+        }
+
+        @media (max-width: 991.98px) {
+            .left-nav {
+                position: static;
+                flex-direction: row;
+                flex-wrap: wrap;
+                gap: 12px;
+                margin-top: 16px;
+            }
+
+            .sidebar .small {
+                display: none;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <div id="app"></div>
+
+    <img id="pageBanner" src="./img/main01.png" class="w-100" alt="横幅" style="margin-top:-70px">
+
+    <main class="container-xl my-3 my-lg-4">
+        <div class="row g-3 g-lg-4">
+            <div class="col-lg-3 d-none d-lg-block">
+                <div class="sidebar">
+                    <img class="big" id="sidebarBig" src="./img/about/about.png" alt="">
+                    <img class="small" id="sidebarSmall" src="./img/about/aboutTree.png" alt="">
+                    <div class="left-nav" id="leftNav">
+                        <div class="active" data-target="page0">企业简介</div>
+                        <div data-target="page1">资格认证</div>
+                        <div data-target="page2">企业文化</div>
+                        <div data-target="page3">工程展示</div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-12 col-lg-9">
+                <div class="mobile-nav d-lg-none mb-3 rounded" id="mobileNav">
+                    <div class="btn-group flex-nowrap" role="group" id="mobileNavGroup">
+                        <button type="button" class="btn btn-outline-secondary btn-sm active"
+                            data-target="page0">企业简介</button>
+                        <button type="button" class="btn btn-outline-secondary btn-sm" data-target="page1">资格认证</button>
+                        <button type="button" class="btn btn-outline-secondary btn-sm" data-target="page2">企业文化</button>
+                        <button type="button" class="btn btn-outline-secondary btn-sm" data-target="page3">工程展示</button>
+                    </div>
+                </div>
+
+                <div class="content-area rounded" id="contentArea">
+
+                    <div class="about-page active" id="page0">
+                        <div class="comp-about-title">企业简介</div>
+                        <div class="comp-about-body">
+                            <p>
+                                德州京信药业有限公司位于山东省平原县东经济技术开发区，西靠京沪铁路，北邻京福高速公路入口，交通便利，环境优越。
+                                是以生物技术为主导的，从事兽药研发、生产、销售、服务于一体的现代化综合性制药企业，为农业部批准的兽药生产厂家。
+                            </p>
+                            <p>
+                                公司总资产12000万元，其中固定资产投资6800万元，占地面积6.2万平方米，建筑面积近3.6万平方米，生产车间面积2.16万平方米，行政办公楼及科研楼面积为1.4万平方米。
+                                企业的生产车间完全按照农业部兽药GMP要求设计，装有14条生产线，所有设备均为国内先进生产线。
+                                在生产上，由质量管理部质监员对生产情况进行现场跟踪监控；在质量管理上，具有先进的检测仪器，建有二级质量管理网，有高于国家标准的企业内控标准和完善的检测手段，以及成熟的工艺流程、按照GMP要求建立一整套生产管理、质量管理文件体系，确保企业能完全按照兽药GMP标准的要求进行生产经营管理。
+                            </p>
+                            <p>
+                                企业现有职工180人，中专以上学历108人，占职工总人数60%；
+                                工程技术人员43人，占职工总人数25%，其中高级技术职称27人，占职工总人数的15%。
+                            </p>
+                            <p>
+                                企业技术力量雄厚，生产设备先进，管理制度严格，检测系统完善。
+                                自投产以来，本着以市场为导向，以效益为中心，以产品求发展，以质量求生存的原则，紧紧围绕市场需求，适时调整产品结构，不断提高产品质量，以优质的产品和完善的服务去开拓市场、占领市场，取得了较好的经济效益和社会效益。
+                            </p>
+                        </div>
+                    </div>
+
+                    <div class="about-page" id="page1">
+                        <div class="comp-about-title">资格认证</div>
+                        <div class="comp-about-body">
+                            <p>
+                                为优秀人才提供舞台，植根用户，融入行业，共同发展。仁者爱人。
+                                人才是心中有他人、爱他人并有能力给他人创造价值、带来利益的人。
+                                为每一位优秀仁才创造专长发挥、自由创造的空间。
+                                立足并完全融入畜牧行业，牢牢扎根终端市场，坚持与用户、与员工、与同行、与整个行业共同发展。
+                            </p>
+                            <p>
+                                企业如何实行人性化管理
+                            </p>
+                            <p>
+                                人性化的管理是以人文关怀为基础的，以员工需要为出发点、尊重员工的。
+                                人性化管理是现代化管理的需要，是激励员工的重要手段。可以从几个方面入手。
+                            </p>
+                            <p>
+                                1、授予员工恰当的权利
+                            </p>
+                            <p>
+                                现代人力资源的实践证明，现代员工都有参与管理的要求的愿望。
+                                任何员工都不想只是一个执行者，都有参与决策的需要。
+                                满足员工的这种需要，不仅可以激励员工，还有利于企业的长期发展。
+                                授权的过程中一定要注意，授权一定要恰当。权利过大，员工无法驾驭；
+                                权利过小，员工无法完成工作。只有恰当的授权才有激励作用。
+                            </p>
+                            <p>
+                                授权的过程中还要注意。授权后，不要对员工的权力乱加干涉，否则会使员工产生不信任的感觉。
+                                授权还要避免重复交叉，一个权力只授予特定的员工。
+                            </p>
+                            <p>
+                                2、目标激励
+                            </p>
+                            <p>
+                                目标激励是指通过设置恰当的目标，激发人的动机，达到调动积极性的目的。
+                                目标之所以能够起到激励激励的作用，是因为目标是组织和个人的奋斗方向，完成目标是员工工作结果的一种体现，是员工成就感的体现。
+                                目标激励的关键在于目标的设置，只有恰当的目标才有激励效果。
+                            </p>
+                            <p>
+                                首先是员工的目标要与组织目标一致。
+                                企业与员工都在追求自己的利益，在这个过程中，两者之间往往会有矛盾，协调好这对矛盾，使企业与员工的目标一致是目标激励得以实现的基础。
+                                在企业目标中分离出员工的个人目标是非常重要的。
+                            </p>
+                            <p>
+                                其次是目标必须是恰当的、具体的。
+                                目标恰当是指，难度不能太大也不能太小。
+                                聚星猎头认为过高的目标，员工无法完成，会挫伤员工积极性；
+                                过低的目标，员工无法在完成目标的同时体会到成就感。
+                                最好的目标应该是“跳一跳，够得着”的，既具有一定挑战性，还具有一定的可实施性。
+                            </p>
+                            <p>
+                                目标具体是指，目标不能含糊不清，最好有个量化的目标，这样不仅完成起来更有目的性，还便于评估。
+                                要想实现这些要求，就要求管理者在制定目标时，要注意与目标执行着的沟通。
+                                了解其需要和能力，这样才能制定出恰当的目标。
+                            </p>
+                            <p>
+                                其三是当员工取得阶段性成果时要及时反馈给员工，有助于他们进一步实现自己的目标。
+                                另外要对完成目标的员工予以奖励，认可其工作成果。
+                            </p>
+                            <p>
+                                3、鼓励竞争
+                            </p>
+                            <p>
+                                很多管理者害怕企业内的竞争现象，认为这样会破坏企业的秩序。
+                                其实，只要管理者对竞争进行合理引导，竞争还可以起到激励员工的作用。
+                            </p>
+                            <p>
+                                对于企业中的后进员工，管理者要鼓励他们迎头赶上；对于企业里的先进员工，管理者要勉励他们继续领先。
+                                在企业内提倡个人竞争，提倡团队竞争，激发员工的工作激情，可以使企业形成良好的竞争氛围。
+                            </p>
+                            <p>
+                                在企业内创造一个公平的竞争环境，对于竞争是必须的。
+                                竞争的有序性除了靠道德约束外，企业也可以制定一些奖惩措施，规范竞争。
+                            </p>
+                            <p>
+                                4、营造有归属感的企业文化
+                            </p>
+                            <p>
+                                企业文化的塑造已经成为现代化企业精神激励的重要手段。
+                                实践表明，有着良好文化的企业，人才的流失是明显低于那些不重视企业文化塑造的企业的。
+                                当企业的文化和员工的价值观一致时，当企业文化充分体现到对员工的尊重时，员工会与企业融为一体。
+                                员工会为自己的企业感到骄傲，愿意为企业奉献自己的智慧。
+                            </p>
+                            <p>
+                                5、注意管理中的细节
+                            </p>
+                            <p>
+                                细节是管理的缩影。
+                                在细节上体现对员工的关怀，是真正贯彻先进管理思想的体现。
+                                一个小礼物，一声问候更能体现企业对员工的重视。
+                                有时候企业对细节上的疏忽往往会使员工产生企业口是心非的感觉。
+                            </p>
+                            <p>
+                                另外，还要注意，企业领导者的示范作用。企业领导者的带头作用是不可忽视的。
+                                领导人做不好工作的话，还怎么去要求下属去完成自己的任务！
+                            </p>
+                            <p>
+                                从上面我们可以看到，企业中常用的激励方法有很多。
+                                但仅仅知道这些方法还不够。
+                                要想让激励方法起到积极作用，必须在正确的指导思想下进行。
+                                很多企业在激励的思想、原则上把握不够，在对激励的认识和运用上存在很多误区，往往采用了激励手段，也无法起到激励的效果。
+                            </p>
+                            <p>
+                                6、以人为本的激励理念
+                            </p>
+                            <p>
+                                富有人性化的激励机制在激励人才过程中，最重要的一点就是企业应把“以人为本”的理念落实到各项具体工作中，切实体现出对员工保持不变的尊重，才能赢得员工对企业的忠诚。
+                            </p>
+                            <p>
+                                沟通是一种很好的激励。
+                                企业在决策过程中，要建立起上下畅通的言路，使领导和员工之间能够就一些分歧进行沟通，对那些关系员工利益的事情进行协调，能够调动员工的积极性。
+                            </p>
+                            <p>
+                                适当激励对一个组织的生存和发展有着非常重要的作用，而激励机制的建立和完善对现代企业的发展更为重要。
+                                面对着激烈的国内外经济竞争和我国现代企业本身固有的劳动者积极性不高、生产率低下等情况。
+                                现代企业要想在激烈的竞争中立于不败之地并保持着对人才恒久的吸引力，一个有效可行的激励机制的建立显得格外关键。
+                            </p>
+                        </div>
+                    </div>
+
+                    <div class="about-page" id="page2">
+                        <div class="comp-about-title">企业文化</div>
+                        <div class="comp-about-body">
+                            <p>
+                                我们十分注重对人力资源的建设，广纳五湖四海贤才，员工是最宝贵的财富。
+                                我们深知，每位员工的无私奉献和努力是推动公司进步和发展的最大动力。
+                                我们的员工是年轻而充满希望的集体，我们期待优秀的人才带着智慧，让想干事的人有机会，能干事的人有舞台，干成事的人有地位有待遇。
+                                唯才是举，真才必用。
+                            </p>
+                            <p>
+                                一是德才兼备原则。
+                                选拔和使用人才按照全面衡量，德才兼备的要求，坚持有德无才是庸人，有才无德是小人，德才不可偏废。
+                            </p>
+                            <p>
+                                二是“效果论”原则。
+                                在用才上，我们不看学历看能力，不看文凭看水平，无论是什么身份，什么学历，什么年龄，只要干得好，干得比其他人出色，业绩突出，就大胆启用，委以重任。
+                                使一大批德才兼备的人才脱颖而出，成为企业发展的栋梁。
+                                广纳五湖四海贤才，员工是最宝贵的财富。
+                                我们深知，每位员工的无私奉献和努力是推动公司进步和发展的最大动力。
+                                我们的员工是年轻而充满希望的集体，我们期待优秀的人才带着智慧，让想干事的人有机会，能干事的人有舞台，干成事的人有地位有待遇。
+                                唯才是举，真才必用。
+                            </p>
+                            <p>
+                                三是实践第一的原则。
+                                “试玉要烧三日满，辨才须待七年期”。
+                                历年来，凡到京信药业工作的各类专业人才，我们都一一重视，有什么突出的地方就把你放到合适的岗位上。
+                                利用自己的优势发挥自己的长处。
+                                找到在公司工作就像在家一样。
+                            </p>
+                            <p>
+                                四是优胜劣汰的原则。
+                                在选用人才上，我们实现了由“伯乐相马”向“赛场选马”的转变，谁干得最好，我们就作为人才加以重用。
+                            </p>
+                            <p>
+                                五是“人人是人才”的原则。
+                                在人才使用上，做到因人而宜，量才适用。
+                                只要在合适的岗位上发挥出最大程度的才智，就是一定意义的人才。
+                                我们按照这个原则，根据每个员工的水平、特长、阅历、性格等，将其安排到相对适宜的岗位上，做到了人尽其才，才尽其能，促进了企业持续、快速、高效发展。没有最好，只有更好，我们优秀的团队因您的加盟而更加优秀。
+                                我们期待着您的关注，京信药业期待着您的加盟。
+                                企业经营理念：以顾客需求为中心，以顾客需求为基础，以顾客需求为起点。
+                                提供优良产品，提供优质服务，打造中国兽药工业的航空母舰。
+                            </p>
+                        </div>
+                    </div>
+
+                    <div class="about-page" id="page3">
+                        <div class="comp-about-title">工程展示</div>
+                        <div class="comp-about-body">
+                            <p>
+                                善、干、学、和。
+                                善是基础和前提，干、学是达成善的手段与过程，和是结果-------通过善、干、学自然实现的一切关系状态。
+                                善，是站在他人利益角度为他人利益着想，做人做事以为别人创造价值、带来利益为出发点。
+                                干，是主体，真干实干、埋头苦干，为自己而干；
+                                淡化权力，强化能力，少管多理，少说多干(试)，先干再说。
+                                和，和自己、和员工、和用户、和供应商、和同行、和政府(社会)。
+                                学，不断提升能力并为他人创造价值，带来利益，努力建设学习型组织，提供更好的学习环境和条件；
+                                学习的三条途径：向书本学习;向他人学习;反省总结自己；
+                                永恒的奋斗主题:学习学习再学习，开放开放再开放，发展发展再发展。
+                            </p>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+
+        </div>
+    </main>
+
+    <script src="./lib/jquery4.0.0.min.js"></script>
+    <script src="./lib/popper.min.js"></script>
+    <script src="./lib/bootstrap.min.js"></script>
+    <script src="./js/mod_header.js"></script>
+    <script src="./js/mod_footer.js"></script>
+
+    <script>
+        (function () {
+            'use strict';
+
+            var pages = ['page0', 'page1', 'page2', 'page3'];
+            var leftNavEls = document.querySelectorAll('.left-nav div');
+            var mobileBtns = document.querySelectorAll('#mobileNavGroup .btn');
+            var contentPages = {
+                page0: document.getElementById('page0'),
+                page1: document.getElementById('page1'),
+                page2: document.getElementById('page2'),
+                page3: document.getElementById('page3')
+            };
+
+            function switchPage(targetId) {
+                // 隐藏所有页面
+                Object.keys(contentPages).forEach(function (key) {
+                    contentPages[key].classList.remove('active');
+                });
+
+                // 显示目标页面
+                if (contentPages[targetId]) {
+                    contentPages[targetId].classList.add('active');
+                }
+
+                // 左侧导航高亮
+                leftNavEls.forEach(function (el) {
+                    el.classList.remove('active');
+                    if (el.dataset.target === targetId) {
+                        el.classList.add('active');
+                    }
+                });
+
+                // 移动端导航高亮
+                mobileBtns.forEach(function (btn) {
+                    btn.classList.remove('active');
+                    if (btn.dataset.target === targetId) {
+                        btn.classList.add('active');
+                    }
+                });
+            }
+
+            // 左侧导航点击
+            leftNavEls.forEach(function (el) {
+                el.addEventListener('click', function () {
+                    var target = this.dataset.target;
+                    if (target) switchPage(target);
+                });
+            });
+
+            // 移动端导航点击
+            mobileBtns.forEach(function (btn) {
+                btn.addEventListener('click', function () {
+                    var target = this.dataset.target;
+                    if (target) switchPage(target);
+                });
+            });
+
+            var urlParams = new URLSearchParams(location.search);
+            var targetIndex = parseInt(urlParams.get('index'), 10);
+            if (!isNaN(targetIndex) && targetIndex >= 0 && targetIndex < pages.length) {
+                switchPage('page' + targetIndex);
+            } else {
+                // 默认显示第一个
+                switchPage('page0');
+            }
+
+        })();
+    </script>
+
+</body>
+
+</html>

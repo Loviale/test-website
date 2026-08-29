@@ -1,0 +1,635 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>招贤纳士</title>
+    <link rel="stylesheet" href="./style/bootstrap.min.css">
+    <link rel="stylesheet" href="./style/header.css">
+    <link rel="stylesheet" href="./style/footer.css">
+    <link rel="shortcut icon" href="./img/favicon.png" type="image/x-icon">
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            background: #ebebeb;
+            font-family: Arial, Helvetica, sans-serif;
+        }
+
+        img {
+            display: block;
+        }
+
+        .sidebar {
+            background: #fff;
+            padding: 20px;
+            position: relative;
+        }
+
+        .sidebar .big {
+            width: 100%;
+            height: auto;
+        }
+
+        .sidebar .small {
+            width: 55px;
+            height: auto;
+            margin-left: 20px;
+        }
+
+        .left-nav {
+            position: absolute;
+            right: 70px;
+            top: 140px;
+            display: flex;
+            flex-direction: column;
+            gap: 25px;
+            font-weight: bold;
+        }
+
+        .left-nav div {
+            cursor: pointer;
+            transition: color 0.2s;
+        }
+
+        .left-nav div.active,
+        .left-nav div:hover {
+            color: #0081a2;
+        }
+
+        .left-nav div:only-child {
+            color: #0081a2;
+        }
+
+        .content-area {
+            background: #fff;
+            padding: 20px;
+            min-height: 400px;
+        }
+
+        .comp-recruit-header {
+            display: flex;
+            color: #d4d4d4;
+            font-weight: bold;
+            font-size: 15px;
+            padding: 12px 16px;
+            border-radius: 4px 4px 0 0;
+        }
+
+        .comp-recruit-header span {
+            width: 20%;
+            text-align: center;
+        }
+
+        .comp-recruit-header span:nth-child(1) {
+            text-align: left;
+        }
+
+        .comp-recruit-row {
+            border-bottom: 1px solid #eee;
+        }
+
+        .comp-recruit-summary {
+            display: flex;
+            align-items: center;
+            padding: 14px 16px;
+            cursor: pointer;
+            transition: background 0.2s;
+            font-size: 14px;
+            color: #333;
+        }
+
+        .comp-recruit-summary:hover {
+            background: #f9f9f9;
+        }
+
+        .comp-recruit-summary span {
+            flex: 1;
+            text-align: center;
+        }
+
+        .comp-recruit-summary span:first-child {
+            text-align: left;
+        }
+
+        .comp-recruit-arrow {
+            width: 40px;
+            flex: 0 0 40px;
+            text-align: center;
+            font-size: 16px;
+            transition: transform 0.25s;
+            color: #999;
+        }
+
+        .comp-recruit-row.open .comp-recruit-arrow {
+            transform: rotate(90deg);
+        }
+
+        .comp-recruit-detail {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.35s ease, padding 0.35s ease;
+            padding: 0 24px;
+            background: #fafafa;
+            border-top: 1px solid #eee;
+            font-size: 14px;
+            color: #333;
+            line-height: 1.8;
+        }
+
+        .comp-recruit-row.open .comp-recruit-detail {
+            padding: 16px 24px 20px;
+        }
+
+        .comp-recruit-section-title {
+            font-weight: bold;
+            margin-top: 12px;
+            margin-bottom: 6px;
+        }
+
+        .comp-recruit-section-title:first-child {
+            margin-top: 0;
+        }
+
+        .comp-recruit-detail p {
+            margin: 0 0 4px;
+            text-indent: 2em;
+        }
+
+        .comp-recruit-req-item {
+            margin: 0 0 4px;
+        }
+
+        .comp-recruit-apply {
+            margin-top: 16px;
+            padding: 8px 28px;
+            background: #0081a2;
+            color: #fff;
+            border: none;
+            border-radius: 4px;
+            font-size: 14px;
+            cursor: pointer;
+            transition: background 0.2s;
+        }
+
+        .comp-recruit-apply:hover {
+            background: #006b87;
+        }
+
+        .recruit-modal-mask {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0, 0, 0, 0.5);
+            display: none;
+            align-items: center;
+            justify-content: center;
+            z-index: 9999;
+        }
+
+        .recruit-modal-mask.show {
+            display: flex;
+        }
+
+        .recruit-modal {
+            background: #fff;
+            border-radius: 8px;
+            padding: 28px 32px 24px;
+            width: 400px;
+            max-width: 92vw;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2);
+        }
+
+        .recruit-modal-title {
+            font-size: 18px;
+            font-weight: bold;
+            color: #333;
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        .comp-msg-field {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            margin-bottom: 14px;
+        }
+
+        .comp-msg-label {
+            font-size: 14px;
+            color: #333;
+            width: 60px;
+            flex-shrink: 0;
+        }
+
+        .comp-msg-input {
+            flex: 1;
+            padding: 8px 12px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            font-size: 14px;
+            outline: none;
+            transition: border-color 0.2s;
+        }
+
+        .comp-msg-input:focus {
+            border-color: #0081a2;
+        }
+
+        .comp-msg-input[type="file"] {
+            padding: 6px 0;
+            border: none;
+        }
+
+        .recruit-modal-btns {
+            display: flex;
+            gap: 12px;
+            justify-content: flex-end;
+            margin-top: 16px;
+        }
+
+        .recruit-modal-btns button {
+            padding: 8px 24px;
+            border: none;
+            border-radius: 4px;
+            font-size: 14px;
+            cursor: pointer;
+            transition: background 0.2s;
+        }
+
+        .recruit-modal-cancel {
+            background: #f0f0f0;
+            color: #666;
+        }
+
+        .recruit-modal-cancel:hover {
+            background: #e0e0e0;
+        }
+
+        .recruit-modal-confirm {
+            background: #0081a2;
+            color: #fff;
+        }
+
+        .recruit-modal-confirm:hover {
+            background: #006b88;
+        }
+
+        .recruit-modal-confirm:disabled {
+            opacity: 0.6;
+            cursor: not-allowed;
+        }
+
+        .comp-msg-toast {
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background: rgba(0, 0, 0, 0.75);
+            color: #fff;
+            padding: 12px 28px;
+            border-radius: 6px;
+            font-size: 14px;
+            z-index: 99999;
+            display: none;
+            animation: toastFade 0.3s ease;
+        }
+
+        .comp-msg-toast.show {
+            display: block;
+        }
+
+        @keyframes toastFade {
+            from {
+                opacity: 0;
+                transform: translate(-50%, -50%) scale(0.95);
+            }
+
+            to {
+                opacity: 1;
+                transform: translate(-50%, -50%) scale(1);
+            }
+        }
+
+        .recruit-list-wrap {
+            display: flex;
+            flex-direction: column;
+        }
+
+        @media (max-width: 991.98px) {
+            .left-nav {
+                position: static;
+                flex-direction: row;
+                flex-wrap: wrap;
+                gap: 12px;
+                margin-top: 16px;
+            }
+
+            .sidebar .small {
+                display: none;
+            }
+
+            .comp-recruit-header {
+                display: none;
+            }
+
+            .comp-recruit-summary {
+                flex-wrap: wrap;
+                padding: 16px;
+                gap: 6px 12px;
+                border-bottom: 1px solid #f0f0f0;
+            }
+
+            .comp-recruit-summary span {
+                width: auto;
+                flex: 0 0 calc(50% - 6px);
+                text-align: left;
+                font-size: 14px;
+                color: #555;
+            }
+
+            .comp-recruit-summary span:first-child {
+                flex: 0 0 100%;
+                font-size: 16px;
+                font-weight: bold;
+                color: #333;
+                margin-bottom: 4px;
+            }
+
+            .comp-recruit-summary span:nth-child(2)::before {
+                content: '招聘人数：';
+                color: #999;
+            }
+
+            .comp-recruit-summary span:nth-child(3)::before {
+                content: '工作地点：';
+                color: #999;
+            }
+
+            .comp-recruit-summary span:nth-child(4)::before {
+                content: '发布日期：';
+                color: #999;
+            }
+
+            .comp-recruit-arrow {
+                flex: 0 0 100%;
+                text-align: right;
+                font-size: 18px;
+                color: #ccc;
+                margin-top: 2px;
+            }
+
+            .comp-recruit-detail {
+                padding: 0 16px;
+                font-size: 13px;
+            }
+
+            .comp-recruit-row.open .comp-recruit-detail {
+                padding: 12px 16px 16px;
+            }
+        }
+
+        @media (max-width: 575.98px) {
+            .comp-recruit-summary span {
+                flex: 0 0 100%;
+                text-align: left !important;
+            }
+
+            .comp-recruit-arrow {
+                text-align: right !important;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <div id="app"></div>
+
+    <img id="pageBanner" src="./img/main01.png" class="w-100" alt="横幅" style="margin-top:-70px">
+
+    <main class="container-xl my-3 my-lg-4">
+        <div class="row g-3 g-lg-4">
+
+            <div class="col-lg-3 d-none d-lg-block">
+                <div class="sidebar">
+                    <img class="big" src="./img/recruit/recruit.png" alt="">
+                    <img class="small" src="./img/recruit/recruitTree.png" alt="">
+                    <div class="left-nav">
+                        <div class="active">人才招聘</div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-12 col-lg-9">
+                <div class="content-area rounded">
+
+                    <div class="comp-recruit-header">
+                        <span>岗位名称</span>
+                        <span>招聘人数</span>
+                        <span>工作地点</span>
+                        <span>发布日期</span>
+                        <span></span>
+                    </div>
+
+                    <div class="recruit-list-wrap" id="recruitList"></div>
+
+                </div>
+            </div>
+
+        </div>
+    </main>
+
+    <!-- 弹窗 -->
+    <div class="recruit-modal-mask" id="resumeModal">
+        <div class="recruit-modal">
+            <div class="recruit-modal-title">投递简历</div>
+            <div class="comp-msg-field">
+                <label class="comp-msg-label">姓名：</label>
+                <input class="comp-msg-input" id="resumeName" placeholder="请输入姓名">
+            </div>
+            <div class="comp-msg-field">
+                <label class="comp-msg-label">电话：</label>
+                <input class="comp-msg-input" id="resumePhone" placeholder="请输入电话">
+            </div>
+            <div class="comp-msg-field">
+                <label class="comp-msg-label">简历：</label>
+                <input type="file" class="comp-msg-input" id="resumeFile">
+            </div>
+            <div class="recruit-modal-btns">
+                <button class="recruit-modal-cancel" id="modalCancel">取消</button>
+                <button class="recruit-modal-confirm" id="modalConfirm">确定</button>
+            </div>
+        </div>
+    </div>
+
+    <div class="comp-msg-toast" id="globalToast"></div>
+
+    <script src="./lib/jquery4.0.0.min.js"></script>
+    <script src="./lib/popper.min.js"></script>
+    <script src="./lib/bootstrap.min.js"></script>
+    <script src="./js/mod_header.js"></script>
+    <script src="./js/mod_footer.js"></script>
+
+    <script>
+        $(() => {
+            'use strict';
+
+            const recruitData = [{
+                name: '储备干部',
+                count: 5,
+                place: '德州',
+                time: '2018-08-01',
+                response: ['因公司发展，需招聘多名储备干部，主要从事兽药生产管理工作，人品端正，工作认真负责，有相关工作经验，具有一定的专业沟通能力，可适当放宽招聘条件。'],
+                require: [
+                    { edu: '大专' },
+                    { language: '不限' },
+                    { age: '不限' },
+                    { workExp: '不限' }
+                ]
+            }, {
+                name: '电工维修',
+                count: 3,
+                place: '德州',
+                time: '2018-08-03',
+                response: ['电工维修8.5小时/天，月休4-8天，法定节假日，有较强的责任心，吃苦耐劳，要求有电工证、一定的工作经验，技术过硬者可相对降低学历要求。'],
+                require: []
+            }];
+
+            const $recruitList = $('#recruitList');
+            const $modal = $('#resumeModal');
+            const $toast = $('#globalToast');
+            const $nameInput = $('#resumeName');
+            const $phoneInput = $('#resumePhone');
+            const $fileInput = $('#resumeFile');
+            const $cancelBtn = $('#modalCancel');
+            const $confirmBtn = $('#modalConfirm');
+
+            let toastTimer;
+            const showToast = (msg) => {
+                $toast.text(msg).addClass('show');
+                clearTimeout(toastTimer);
+                toastTimer = setTimeout(() => $toast.removeClass('show'), 2000);
+            };
+
+            const openModal = () => {
+                $modal.addClass('show');
+                $nameInput.val('');
+                $phoneInput.val('');
+                $fileInput.val('');
+                $confirmBtn.prop('disabled', false).text('确定');
+            };
+
+            const closeModal = () => $modal.removeClass('show');
+
+            $cancelBtn.on('click', closeModal);
+            $modal.on('click', (e) => { if (e.target === $modal[0]) closeModal(); });
+
+            $confirmBtn.on('click', () => {
+                const name = $nameInput.val().trim();
+                const phone = $phoneInput.val().trim();
+                const file = $fileInput[0].files[0];
+
+                if (!name || !phone || !file) {
+                    showToast('请填写完整信息');
+                    return;
+                }
+
+                $confirmBtn.prop('disabled', true).text('投递中...');
+
+                setTimeout(() => {
+                    closeModal();
+                    showToast('投递成功');
+                }, 2000);
+            });
+
+            const getRequireField = (requireArr, key) => {
+                for (const item of requireArr) {
+                    if (item[key] !== undefined) return item[key];
+                }
+                return '';
+            };
+
+            const renderList = (list) => {
+                const html = list.map((job) => {
+                    const respHtml = (job.response || [])
+                        .map(line => `<p>${line}</p>`)
+                        .join('');
+
+                    let reqHtml = '';
+                    if (job.require?.length) {
+                        const fields = [
+                            { key: 'edu', label: '学历要求' },
+                            { key: 'language', label: '语言要求' },
+                            { key: 'age', label: '年龄要求' },
+                            { key: 'workExp', label: '工作年限' }
+                        ];
+                        reqHtml = fields
+                            .map(f => {
+                                const val = getRequireField(job.require, f.key);
+                                return val ? `<div class="comp-recruit-req-item">${f.label}：${val}</div>` : '';
+                            })
+                            .join('');
+                        if (reqHtml) reqHtml = `<div class="comp-recruit-section-title">任职要求：</div>${reqHtml}`;
+                    }
+
+                    // <button class="comp-recruit-apply">投递简历</button>
+                    return `
+                        <div class="comp-recruit-row">
+                            <div class="comp-recruit-summary">
+                                <span>${job.name || ''}</span>
+                                <span>${job.count || ''}</span>
+                                <span>${job.place || ''}</span>
+                                <span>${job.time || ''}</span>
+                                <span class="comp-recruit-arrow">›</span>
+                            </div>
+                            <div class="comp-recruit-detail">
+                                <div class="comp-recruit-section-title">岗位职责：</div>
+                                ${respHtml}
+                                ${reqHtml}
+                                
+                            </div>
+                        </div>
+                    `;
+                }).join('');
+
+                $recruitList.html(html);
+
+                $recruitList.find('.comp-recruit-row').each(function () {
+                    const $row = $(this);
+                    const $summary = $row.find('.comp-recruit-summary');
+                    const $detail = $row.find('.comp-recruit-detail');
+
+                    $summary.on('click', () => {
+                        if ($row.hasClass('open')) {
+                            $detail.css('max-height', '0');
+                            $row.removeClass('open');
+                        } else {
+                            $row.addClass('open');
+                            $detail.css('max-height', ($detail[0].scrollHeight + 40) + 'px');
+                        }
+                    });
+
+                    $row.find('.comp-recruit-apply').on('click', (e) => {
+                        e.stopPropagation();
+                        openModal();
+                    });
+                });
+            };
+
+            renderList(recruitData);
+
+        });
+    </script>
+
+</body>
+
+</html>

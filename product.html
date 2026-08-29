@@ -1,0 +1,480 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>产品展厅</title>
+    <link rel="stylesheet" href="./style/bootstrap.min.css">
+    <link rel="stylesheet" href="./style/header.css">
+    <link rel="stylesheet" href="./style/footer.css">
+    <link rel="shortcut icon" href="./img/favicon.png" type="image/x-icon">
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            background: #ebebeb;
+            font-family: Arial, Helvetica, sans-serif;
+        }
+
+        img {
+            display: block;
+        }
+
+        .sidebar {
+            background: #fff;
+            padding: 20px;
+            position: relative;
+        }
+
+        .sidebar .big {
+            width: 100%;
+            height: auto;
+        }
+
+        .sidebar .small {
+            width: 55px;
+            height: auto;
+            margin-left: 20px;
+        }
+
+        .left-nav {
+            position: absolute;
+            right: 70px;
+            top: 140px;
+            display: flex;
+            flex-direction: column;
+            gap: 25px;
+            font-weight: bold;
+        }
+
+        .left-nav div {
+            cursor: pointer;
+            transition: color 0.2s;
+        }
+
+        .left-nav div.active {
+            color: #0081a2;
+        }
+
+        .left-nav div:hover {
+            color: #0081a2;
+        }
+
+        .mobile-nav {
+            background: #fff;
+            padding: 12px 16px;
+            overflow-x: auto;
+            white-space: nowrap;
+            -webkit-overflow-scrolling: touch;
+        }
+
+        .mobile-nav .btn {
+            font-size: 14px;
+        }
+
+        .mobile-nav .btn.active,
+        .mobile-nav .btn-check:checked+.btn {
+            background-color: #0081a2;
+            border-color: #0081a2;
+            color: #fff;
+        }
+
+        .content-area {
+            background: #fff;
+            padding: 20px;
+            min-height: 400px;
+        }
+
+        /* ===== 产品列表样式 ===== */
+        .pl-sub-nav {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px 20px;
+            padding-bottom: 16px;
+            border-bottom: 1px solid #e8e8e8;
+            margin-bottom: 20px;
+        }
+
+        .pl-sub-nav div {
+            font-size: 14px;
+            color: #666;
+            cursor: pointer;
+            /* padding: 4px 0; */
+            transition: color 0.2s;
+            position: relative;
+        }
+
+        .pl-sub-nav div.active {
+            color: #0081a2;
+            font-weight: bold;
+        }
+
+        .pl-sub-nav div.active::after {
+            content: '';
+            position: absolute;
+            bottom: -2px;
+            left: 0;
+            width: 100%;
+            height: 2px;
+            background: #0081a2;
+        }
+
+        .pl-sub-nav div:hover {
+            color: #0081a2;
+        }
+
+        .pl-item {
+            border: 1px solid #eee;
+            border-radius: 6px;
+            overflow: hidden;
+            transition: box-shadow 0.3s;
+            background: #fff;
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .pl-item:hover {
+            box-shadow: 0 4px 16px rgba(0, 0, 0, 0.1);
+        }
+
+        .pl-item-top {
+            width: 100%;
+            height: 180px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: #fafafa;
+            padding: 12px;
+        }
+
+        .pl-item-top img {
+            max-width: 100%;
+            max-height: 100%;
+            object-fit: contain;
+        }
+
+        .pl-item-bottom {
+            padding: 14px 16px 16px;
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .pl-item-title {
+            font-size: 15px;
+            font-weight: bold;
+            color: #333;
+            margin-bottom: 4px;
+        }
+
+        .pl-item-per {
+            font-size: 13px;
+            color: #888;
+            margin-bottom: 12px;
+            text-align: center;
+        }
+
+        .pl-detail-btn {
+            margin-top: auto;
+            padding: 6px 20px;
+            background: #0081a2;
+            color: #fff;
+            border: none;
+            border-radius: 4px;
+            font-size: 13px;
+            cursor: pointer;
+            transition: background 0.2s;
+            align-self: flex-start;
+        }
+
+        .pl-detail-btn:hover {
+            background: #006b88;
+        }
+
+        .pagination {
+            margin-top: 24px;
+        }
+
+        .pagination .page-link {
+            color: #333;
+        }
+
+        .pagination .page-item.active .page-link {
+            background-color: #0081a2;
+            border-color: #0081a2;
+            color: #fff;
+        }
+
+        @media (max-width: 991.98px) {
+            .left-nav {
+                position: static;
+                flex-direction: row;
+                flex-wrap: wrap;
+                gap: 12px;
+                margin-top: 16px;
+            }
+
+            .sidebar .small {
+                display: none;
+            }
+
+            .pl-item-top {
+                height: 150px;
+            }
+        }
+
+        @media (max-width: 575.98px) {
+            .pl-sub-nav {
+                gap: 6px 14px;
+            }
+
+            .pl-sub-nav div {
+                font-size: 13px;
+            }
+
+            .pl-item-top {
+                height: 120px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <div id="app"></div>
+
+    <img id="pageBanner" src="./img/main01.png" class="w-100" alt="横幅" style="margin-top:-70px">
+
+    <main class="container-xl my-3 my-lg-4">
+        <div class="row g-3 g-lg-4">
+
+            <!-- 左侧栏 -->
+            <div class="col-lg-3 d-none d-lg-block">
+                <div class="sidebar">
+                    <img class="big" id="sidebarBig" src="./img/product/product.png" alt="">
+                    <img class="small" id="sidebarSmall" src="./img/product/productTree.png" alt="">
+                    <div class="left-nav" id="leftNav">
+                        <div class="active" data-index="0">牛羊用产品</div>
+                        <div data-index="1">猪用产品</div>
+                        <div data-index="2">宠物用产品</div>
+                        <div data-index="3">家禽用产品</div>
+                        <div data-index="4">水产用产品</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 右侧内容 -->
+            <div class="col-12 col-lg-9">
+
+                <!-- 移动端分类导航 -->
+                <div class="mobile-nav d-lg-none mb-3 rounded" id="mobileNav">
+                    <div class="btn-group flex-nowrap" role="group" id="mobileNavGroup">
+                        <button type="button" class="btn btn-outline-secondary btn-sm active"
+                            data-index="0">牛羊用产品</button>
+                        <button type="button" class="btn btn-outline-secondary btn-sm" data-index="1">猪用产品</button>
+                        <button type="button" class="btn btn-outline-secondary btn-sm" data-index="2">宠物用产品</button>
+                        <button type="button" class="btn btn-outline-secondary btn-sm" data-index="3">家禽用产品</button>
+                        <button type="button" class="btn btn-outline-secondary btn-sm" data-index="4">水产用产品</button>
+                    </div>
+                </div>
+
+                <div class="content-area rounded" id="contentArea">
+                    <!-- 子分类导航由 JS 动态生成 -->
+                    <div class="pl-sub-nav" id="subNav"></div>
+                    <!-- 产品列表 -->
+                    <div class="row row-cols-1 row-cols-sm-2 row-cols-xl-3 g-3" id="productList"></div>
+                    <!-- 分页容器 -->
+                    <div id="paginationContainer"></div>
+                </div>
+            </div>
+
+        </div>
+    </main>
+
+    <script src="./lib/jquery4.0.0.min.js"></script>
+    <script src="./lib/popper.min.js"></script>
+    <script src="./lib/bootstrap.min.js"></script>
+    <script src="./js/utils_pagination.js"></script>
+    <script src="./js/mod_header.js"></script>
+    <script src="./js/mod_footer.js"></script>
+
+    <script>
+        (function () {
+            'use strict';
+
+            var CATEGORIES = [
+                { key: 'product1', label: '牛羊用产品', json: './mock/product/product1.json' },
+                { key: 'product2', label: '猪用产品', json: './mock/product/product2.json' },
+                { key: 'product3', label: '宠物用产品', json: './mock/product/product3.json' },
+                { key: 'product4', label: '家禽用产品', json: './mock/product/product4.json' },
+                { key: 'product5', label: '水产用产品', json: './mock/product/product5.json' }
+            ];
+
+            var SUB_CATEGORIES = ['全部', '粉针类', '小容量注射液', '酊剂', '口服液', '非静脉大容量注射液', '片剂', '颗粒剂', '消毒剂'];
+
+            var PAGE_SIZE = 9;
+
+            var dataCache = {};
+            var currentData = [];
+            var currentCategoryIndex = 0;
+            var currentSubFilter = '全部';
+            var paginationInstance = null;
+
+            var leftNavEls = document.querySelectorAll('.left-nav div');
+            var mobileNavGroup = document.getElementById('mobileNavGroup');
+            var subNavEl = document.getElementById('subNav');
+            var productListEl = document.getElementById('productList');
+            var paginationContainer = document.getElementById('paginationContainer');
+
+            function renderProductList(list) {
+                productListEl.innerHTML = '';
+                if (!list || list.length === 0) {
+                    productListEl.innerHTML = '<div class="col-12 text-center text-muted" style="padding:60px 0;">暂无产品</div>';
+                    return;
+                }
+                list.forEach(function (item) {
+                    var col = document.createElement('div');
+                    col.className = 'col';
+                    col.innerHTML = `
+                        <div class="pl-item">
+                            <div class="pl-item-top">
+                                <img src="./img/product/${item.img || ''}" alt="${item.name || ''}" onerror="this.src='./img/news/404.png'">
+                            </div>
+                            <div class="pl-item-bottom">
+                                <div class="pl-item-title">${item.name || ''}&nbsp;&nbsp;${item.detailName || ''}</div>
+                                <div class="pl-item-per">${item.per || ''}</div>
+                                <div style="display:flex;justify-content:center;">
+                                    <button class="pl-detail-btn">查看详情</button>    
+                                </div>
+                            </div>
+                        </div>
+                    `;
+                    col.querySelector('.pl-detail-btn').addEventListener('click', function () {
+                        localStorage.setItem('pageDetail', JSON.stringify(item));
+                        localStorage.setItem('pageDetailList', JSON.stringify(currentData));
+                        location.href = './productDetail.html';
+                    });
+                    productListEl.appendChild(col);
+                });
+            }
+
+            function renderSubNav() {
+                subNavEl.innerHTML = '';
+                SUB_CATEGORIES.forEach(function (text) {
+                    var d = document.createElement('div');
+                    d.textContent = text;
+                    if (text === currentSubFilter) d.classList.add('active');
+                    d.addEventListener('click', function () {
+                        currentSubFilter = text;
+                        renderSubNav();
+                        applyFilterAndPagination();
+                    });
+                    subNavEl.appendChild(d);
+                });
+            }
+
+            function applyFilterAndPagination() {
+                var filtered = currentData;
+                if (currentSubFilter !== '全部') {
+                    filtered = currentData.filter(function (item) {
+                        return item.ps === currentSubFilter;
+                    });
+                }
+
+                if (paginationInstance) {
+                    paginationInstance.update(filtered);
+                } else {
+                    paginationInstance = createPagination(filtered);
+                    paginationContainer.appendChild(paginationInstance.el);
+                }
+                renderProductList(paginationInstance.getPageData());
+            }
+
+            function createPagination(data) {
+                return window.Pagination({
+                    pageSize: PAGE_SIZE,
+                    data: data,
+                    onPageChange: function (pageData) {
+                        renderProductList(pageData);
+                    }
+                });
+            }
+
+            function loadCategory(index) {
+                currentCategoryIndex = index;
+                currentSubFilter = '全部';
+
+                leftNavEls.forEach(function (el, i) {
+                    el.classList.toggle('active', i === index);
+                });
+
+                var mobileBtns = mobileNavGroup.querySelectorAll('.btn');
+                mobileBtns.forEach(function (btn, i) {
+                    btn.classList.toggle('active', i === index);
+                });
+
+                var cat = CATEGORIES[index];
+                if (!cat) return;
+
+                if (dataCache[cat.key]) {
+                    currentData = dataCache[cat.key];
+                    renderSubNav();
+                    applyFilterAndPagination();
+                    return;
+                }
+
+                fetch(cat.json)
+                    .then(function (res) {
+                        if (!res.ok) throw new Error('加载失败');
+                        return res.json();
+                    })
+                    .then(function (list) {
+                        dataCache[cat.key] = list;
+                        currentData = list;
+                        renderSubNav();
+                        applyFilterAndPagination();
+                    })
+                    .catch(function (err) {
+                        productListEl.innerHTML = '<div class="col-12 text-center text-danger" style="padding:60px 0;">数据加载失败，请刷新重试</div>';
+                        console.error(err);
+                    });
+            }
+
+            // 左侧导航点击
+            leftNavEls.forEach(function (el) {
+                el.addEventListener('click', function () {
+                    var index = parseInt(this.dataset.index, 10);
+                    if (!isNaN(index)) loadCategory(index);
+                });
+            });
+
+            // 移动端导航点击
+            mobileNavGroup.addEventListener('click', function (e) {
+                var btn = e.target.closest('.btn');
+                if (!btn) return;
+                var index = parseInt(btn.dataset.index, 10);
+                if (!isNaN(index)) loadCategory(index);
+            });
+
+            var urlParams = new URLSearchParams(location.search);
+            var targetIndex = parseInt(urlParams.get('index'), 10);
+            if (!isNaN(targetIndex) && targetIndex >= 0 && targetIndex < CATEGORIES.length) {
+                loadCategory(targetIndex);
+            } else {
+                loadCategory(0);
+            }
+
+        })();
+    </script>
+
+</body>
+
+</html>

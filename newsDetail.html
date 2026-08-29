@@ -1,0 +1,349 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>新闻详情</title>
+    <link rel="stylesheet" href="./style/bootstrap.min.css">
+    <link rel="stylesheet" href="./style/header.css">
+    <link rel="stylesheet" href="./style/footer.css">
+    <link rel="shortcut icon" href="./img/favicon.png" type="image/x-icon">
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            background: #ebebeb;
+            font-family: Arial, Helvetica, sans-serif;
+        }
+
+        img {
+            display: block;
+        }
+
+        #main {
+            width: 1200px;
+            margin: 20px auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+        }
+
+        #main .l {
+            width: 25%;
+            background: #fff;
+            padding: 20px;
+            position: relative;
+            display: flex;
+            flex-direction: column;
+        }
+
+        #main .l .big {
+            width: 100%;
+            height: auto;
+        }
+
+        #main .l .small {
+            width: 55px;
+            height: auto;
+            margin-left: 20px;
+        }
+
+        .left-nav {
+            position: absolute;
+            right: 70px;
+            top: 140px;
+            display: flex;
+            flex-direction: column;
+            gap: 25px;
+            font-weight: bold;
+        }
+
+        .left-nav div {
+            cursor: pointer;
+            transition: color 0.2s;
+        }
+
+        .left-nav div:hover {
+            color: #0081a2;
+        }
+
+        #main .r {
+            width: 73%;
+            background: #fff;
+            padding: 20px;
+            min-height: 600px;
+        }
+
+        /* 新闻详情样式 */
+        .news-detail-title {
+            text-align: center;
+            font-size: 22px;
+            color: #000;
+            font-weight: bold;
+            margin-bottom: 12px;
+        }
+
+        .news-detail-meta {
+            text-align: center;
+            font-size: 14px;
+            color: #999;
+            margin-bottom: 24px;
+            padding-bottom: 16px;
+            border-bottom: 1px solid #eee;
+        }
+
+        .news-detail-content p {
+            font-size: 15px;
+            color: #333;
+            line-height: 1.8;
+            text-indent: 2em;
+            margin-bottom: 12px;
+        }
+
+        .news-detail-content img {
+            max-width: 100%;
+            display: block;
+            margin: 16px auto;
+            border-radius: 4px;
+        }
+
+        .detail-pager {
+            margin-top: 20px;
+            font-size: 13px;
+            color: #666;
+            line-height: 2;
+            border-top: 1px solid #eee;
+            padding-top: 16px;
+        }
+
+        .detail-pager-item {
+            cursor: pointer;
+            transition: color 0.2s;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+        }
+
+        .detail-pager-item:hover {
+            color: #0081a2;
+        }
+
+        .detail-pager-item.disabled {
+            color: #ccc;
+            cursor: default;
+        }
+
+        .detail-pager-item.disabled:hover {
+            color: #ccc;
+        }
+
+        .back-btn {
+            display: inline-block;
+            margin-top: 16px;
+            padding: 6px 20px;
+            background: #0081a2;
+            color: #fff;
+            border: none;
+            border-radius: 4px;
+            font-size: 13px;
+            cursor: pointer;
+            transition: background 0.2s;
+            text-decoration: none;
+        }
+
+        .back-btn:hover {
+            background: #006b88;
+            color: #fff;
+        }
+
+        @media (max-width: 991px) {
+            #main {
+                width: 100%;
+                padding: 0 16px;
+                flex-direction: column;
+            }
+
+            #main .l {
+                display: none;
+            }
+
+            #main .r {
+                width: 100%;
+                min-height: auto;
+            }
+
+            #pageBanner {
+                margin-top: 0 !important;
+            }
+        }
+
+        @media (max-width: 575px) {
+            #main {
+                padding: 0 10px;
+            }
+
+            #main .r {
+                padding: 14px;
+            }
+
+            .news-detail-title {
+                font-size: 17px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <div id="app"></div>
+    <img id="pageBanner" src="./img/main02.png" class="w-100" alt="横幅" style="margin-top:-70px">
+
+    <main id="main">
+        <div class="l">
+            <img class="big" id="sidebarBig" src="./img/news/news.png" alt="">
+            <img class="small" id="sidebarSmall" src="./img/news/newsTree.png" alt="">
+            <div class="left-nav" id="leftNav">
+                <div data-index="0">公司动态</div>
+                <div data-index="1">行业动态</div>
+                <div data-index="2">视频短片</div>
+            </div>
+        </div>
+        <div class="r" id="contentArea"></div>
+    </main>
+
+    <script src="./lib/popper.min.js"></script>
+    <script src="./lib/bootstrap.min.js"></script>
+    <script src="./js/mod_header.js"></script>
+    <script src="./js/mod_footer.js"></script>
+
+    <script>
+        (function () {
+            'use strict';
+
+            if ('scrollRestoration' in history) history.scrollRestoration = 'manual';
+            window.scrollTo(0, 0);
+
+            const detailData = JSON.parse(localStorage.getItem('pageDetail'));
+            const detailList = JSON.parse(localStorage.getItem('pageDetailList')) || [];
+
+            if (!detailData || detailData.from !== '新闻动态') {
+                location.href = './news.html';
+                return;
+            }
+
+            const rEl = document.getElementById('contentArea');
+
+            // 左侧导航点击返回列表 
+            const leftNavEls = document.querySelectorAll('.left-nav div');
+            leftNavEls.forEach((el, index) => {
+                el.addEventListener('click', function () {
+                    location.href = './news.html?index=' + index;
+                });
+            });
+
+            /**
+             * 
+             * 渲染新闻详情
+            */
+            function renderDetail() {
+                const title = document.createElement('div');
+                title.className = 'news-detail-title';
+                title.textContent = detailData.title || '';
+                rEl.appendChild(title);
+
+                const meta = document.createElement('div');
+                meta.className = 'news-detail-meta';
+                meta.textContent = '浏览量：' + (detailData.viewCount || 0) + '次  ' + (detailData.time || '');
+                rEl.appendChild(meta);
+
+                const content = document.createElement('div');
+                content.className = 'news-detail-content';
+
+                const folder = detailData.folder || detailData.floder || '';
+                (detailData.main || []).forEach(item => {
+                    if (item.type === 'text') {
+                        const p = document.createElement('p');
+                        p.innerHTML = item.value;
+                        content.appendChild(p);
+                    } else if (item.type === 'image') {
+                        const img = document.createElement('img');
+                        img.src = './img/news/' + folder + '/' + item.value;
+                        img.alt = detailData.title || '';
+                        img.onerror = function () { this.src = './img/news/404.png'; };
+                        content.appendChild(img);
+                    }
+                });
+                rEl.appendChild(content);
+
+                const pager = createPager();
+                if (pager) rEl.appendChild(pager);
+
+                const backBtn = document.createElement('a');
+                backBtn.className = 'back-btn';
+                backBtn.textContent = '← 返回新闻列表';
+                backBtn.href = './news.html';
+                rEl.appendChild(backBtn);
+            }
+
+            // 上一篇 / 下一篇
+            function createPager() {
+                if (detailList.length === 0) return null;
+
+                const matchKey = 'title';
+                let curIndex = -1;
+                for (let i = 0; i < detailList.length; i++) {
+                    if (detailList[i][matchKey] === detailData[matchKey]) {
+                        curIndex = i;
+                        break;
+                    }
+                }
+
+                const prevItem = curIndex > 0 ? detailList[curIndex - 1] : null;
+                const nextItem = (curIndex >= 0 && curIndex < detailList.length - 1) ? detailList[curIndex + 1] : null;
+
+                const pager = document.createElement('div');
+                pager.className = 'detail-pager';
+
+                const prevEl = document.createElement('div');
+                prevEl.className = 'detail-pager-item' + (prevItem ? '' : ' disabled');
+                prevEl.textContent = '上一篇：' + (prevItem ? (prevItem[matchKey] || '') : '没有了');
+                if (prevItem) {
+                    prevEl.addEventListener('click', function () {
+                        const itemWithFrom = Object.assign({}, prevItem, { from: '新闻动态' });
+                        localStorage.setItem('pageDetail', JSON.stringify(itemWithFrom));
+                        localStorage.setItem('pageDetailList', JSON.stringify(detailList));
+                        location.reload();
+                    });
+                }
+
+                const nextEl = document.createElement('div');
+                nextEl.className = 'detail-pager-item' + (nextItem ? '' : ' disabled');
+                nextEl.textContent = '下一篇：' + (nextItem ? (nextItem[matchKey] || '') : '没有了');
+                if (nextItem) {
+                    nextEl.addEventListener('click', function () {
+                        const itemWithFrom = Object.assign({}, nextItem, { from: '新闻动态' });
+                        localStorage.setItem('pageDetail', JSON.stringify(itemWithFrom));
+                        localStorage.setItem('pageDetailList', JSON.stringify(detailList));
+                        location.reload();
+                    });
+                }
+
+                pager.appendChild(prevEl);
+                pager.appendChild(nextEl);
+                return pager;
+            }
+
+            renderDetail();
+
+        })();
+    </script>
+
+</body>
+
+</html>

@@ -1,0 +1,637 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>联系我们</title>
+    <link rel="stylesheet" href="./style/bootstrap.min.css">
+    <link rel="stylesheet" href="./style/header.css">
+    <link rel="stylesheet" href="./style/footer.css">
+    <link rel="shortcut icon" href="./img/favicon.png" type="image/x-icon">
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            background: #ebebeb;
+            font-family: Arial, Helvetica, sans-serif;
+        }
+
+        img {
+            display: block;
+        }
+
+        .sidebar {
+            background: #fff;
+            padding: 20px;
+            position: relative;
+        }
+
+        .sidebar .big {
+            width: 100%;
+            height: auto;
+        }
+
+        .sidebar .small {
+            width: 55px;
+            height: auto;
+            margin-left: 20px;
+        }
+
+        .left-nav {
+            position: absolute;
+            right: 70px;
+            top: 140px;
+            display: flex;
+            flex-direction: column;
+            gap: 25px;
+            font-weight: bold;
+        }
+
+        .left-nav div {
+            cursor: pointer;
+            transition: color 0.2s;
+        }
+
+        .left-nav div.active {
+            color: #0081a2;
+        }
+
+        .left-nav div:hover {
+            color: #0081a2;
+        }
+
+        .mobile-nav {
+            background: #fff;
+            padding: 12px 16px;
+            overflow-x: auto;
+            white-space: nowrap;
+            -webkit-overflow-scrolling: touch;
+        }
+
+        .mobile-nav .btn {
+            font-size: 14px;
+        }
+
+        .mobile-nav .btn.active,
+        .mobile-nav .btn-check:checked+.btn {
+            background-color: #0081a2;
+            border-color: #0081a2;
+            color: #fff;
+        }
+
+        .content-area {
+            background: #fff;
+            padding: 20px;
+            min-height: 400px;
+        }
+
+        /* ===== 联系我们样式 ===== */
+        .comp-contact {
+            color: #333;
+            font-size: 15px;
+            line-height: 1.8;
+        }
+
+        .comp-contact-intro {
+            margin-bottom: 20px;
+        }
+
+        .comp-contact-intro p {
+            margin: 0 0 8px;
+            text-indent: 2em;
+            text-align: justify;
+        }
+
+        .comp-contact-map {
+            width: 100%;
+            height: 360px;
+            border-radius: 8px;
+            margin-bottom: 24px;
+            border: 1px solid #eee;
+        }
+
+        .comp-contact-info {
+            display: flex;
+            gap: 40px;
+            margin-bottom: 24px;
+            flex-wrap: wrap;
+        }
+
+        .comp-contact-info-col {
+            flex: 1;
+            min-width: 200px;
+        }
+
+        .comp-contact-info-item {
+            margin-bottom: 8px;
+        }
+
+        .comp-contact-info-label {
+            font-weight: bold;
+            color: #0081a2;
+            margin-right: 8px;
+        }
+
+        .comp-contact-bottom {
+            display: flex;
+            align-items: center;
+            gap: 24px;
+            flex-wrap: wrap;
+        }
+
+        .comp-contact-qr {
+            width: 175px;
+            height: 175px;
+            flex-shrink: 0;
+            border-radius: 8px;
+        }
+
+        .comp-contact-bottom-text {
+            flex: 1;
+            min-width: 200px;
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            font-size: 14px;
+            color: #555;
+        }
+
+        .comp-msg-welcome {
+            font-size: 18px;
+            font-weight: bold;
+            color: #333;
+            margin-bottom: 20px;
+        }
+
+        .comp-msg-field {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            margin-bottom: 14px;
+        }
+
+        .comp-msg-label {
+            font-size: 14px;
+            color: #333;
+            width: 80px;
+            flex-shrink: 0;
+        }
+
+        .comp-msg-required {
+            color: #e74c3c;
+            margin-right: 4px;
+        }
+
+        .comp-msg-input {
+            flex: 1;
+            padding: 8px 12px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            font-size: 14px;
+            outline: none;
+            transition: border-color 0.2s;
+        }
+
+        .comp-msg-input:focus {
+            border-color: #0081a2;
+        }
+
+        .comp-msg-textarea {
+            flex: 1 1 auto;
+            padding: 8px 12px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            font-size: 14px;
+            outline: none;
+            transition: border-color 0.2s;
+            width: 100%;
+            min-height: 80px;
+            /* resize: vertical; */
+            font-family: inherit;
+        }
+
+        .comp-msg-textarea:focus {
+            border-color: #0081a2;
+        }
+
+        .comp-msg-captcha-wrap {
+            flex: 1;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .comp-msg-captcha-wrap .comp-msg-input {
+            flex: 1;
+        }
+
+        .comp-msg-captcha-img {
+            width: 100px;
+            height: 38px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            cursor: pointer;
+            flex-shrink: 0;
+        }
+
+        .comp-msg-submit {
+            padding: 10px 40px;
+            background: #0081a2;
+            color: #fff;
+            border: none;
+            border-radius: 4px;
+            font-size: 15px;
+            cursor: pointer;
+            transition: background 0.2s;
+            margin-top: 8px;
+        }
+
+        .comp-msg-submit:hover {
+            background: #006b88;
+        }
+
+        /* ===== Toast ===== */
+        .comp-msg-toast {
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background: rgba(0, 0, 0, 0.75);
+            color: #fff;
+            padding: 12px 28px;
+            border-radius: 6px;
+            font-size: 14px;
+            z-index: 99999;
+            display: none;
+            animation: toastFade 0.3s ease;
+        }
+
+        .comp-msg-toast.show {
+            display: block;
+        }
+
+        @keyframes toastFade {
+            from {
+                opacity: 0;
+                transform: translate(-50%, -50%) scale(0.95);
+            }
+
+            to {
+                opacity: 1;
+                transform: translate(-50%, -50%) scale(1);
+            }
+        }
+
+        .contact-page {
+            display: none;
+        }
+
+        .contact-page.active {
+            display: block;
+        }
+
+        @media (max-width: 991.98px) {
+            .left-nav {
+                position: static;
+                flex-direction: row;
+                flex-wrap: wrap;
+                gap: 12px;
+                margin-top: 16px;
+            }
+
+            .sidebar .small {
+                display: none;
+            }
+
+            .comp-contact-info {
+                flex-direction: column;
+                gap: 12px;
+            }
+
+            .comp-contact-info-col {
+                min-width: auto;
+            }
+
+            .comp-contact-bottom {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+
+            .comp-msg-field {
+                flex-direction: column;
+                align-items: stretch;
+                gap: 4px;
+            }
+
+            .comp-msg-label {
+                width: auto;
+                font-size: 13px;
+                text-align: left;
+            }
+
+            .comp-msg-captcha-wrap {
+                flex-wrap: wrap;
+            }
+        }
+
+        @media (max-width: 575.98px) {
+            .comp-contact-map {
+                height: 220px;
+            }
+
+            .comp-contact-qr {
+                width: 120px;
+                height: 120px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <div id="app"></div>
+
+    <img id="pageBanner" src="./img/main01.png" class="w-100" alt="横幅" style="margin-top:-70px">
+
+    <main class="container-xl my-3 my-lg-4">
+        <div class="row g-3 g-lg-4">
+            <div class="col-lg-3 d-none d-lg-block">
+                <div class="sidebar">
+                    <img class="big" id="sidebarBig" src="./img/contact/contact.png" alt="">
+                    <img class="small" id="sidebarSmall" src="./img/contact/contactTree.png" alt="">
+                    <div class="left-nav" id="leftNav">
+                        <div class="active" data-target="page0">联系我们</div>
+                        <div data-target="page1">在线留言</div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-12 col-lg-9">
+                <!-- 小屏 -->
+                <div class="mobile-nav d-lg-none mb-3 rounded" id="mobileNav">
+                    <div class="btn-group flex-nowrap" role="group" id="mobileNavGroup">
+                        <button type="button" class="btn btn-outline-secondary btn-sm active"
+                            data-target="page0">联系我们</button>
+                        <button type="button" class="btn btn-outline-secondary btn-sm" data-target="page1">在线留言</button>
+                    </div>
+                </div>
+
+                <div class="content-area rounded" id="contentArea">
+                    <div class="contact-page active" id="page0">
+                        <div class="comp-contact">
+                            <div class="comp-contact-intro">
+                                <p>我们在聆听，在服务中进步</p>
+                                <p>有任何想法和意见都欢迎你及时联系我们，我们会用专业的服务为你答疑解惑。</p>
+                            </div>
+
+                            <div id="contactBaiduMap" class="comp-contact-map"></div>
+
+                            <div class="comp-contact-info">
+                                <div class="comp-contact-info-col">
+                                    <div class="comp-contact-info-item">
+                                        <span class="comp-contact-info-label">地址：</span>山东平原经济开发区东区18号
+                                    </div>
+                                    <div class="comp-contact-info-item">
+                                        <span class="comp-contact-info-label">内勤：</span>0534-4292999
+                                    </div>
+                                    <div class="comp-contact-info-item">
+                                        <span class="comp-contact-info-label">Email：</span>dzjxzy@163.com
+                                    </div>
+                                </div>
+                                <div class="comp-contact-info-col">
+                                    <div class="comp-contact-info-item">
+                                        <span class="comp-contact-info-label">行政办公室：</span>0534-4299677
+                                    </div>
+                                    <div class="comp-contact-info-item">
+                                        <span class="comp-contact-info-label">传真：</span>0534-2167877
+                                    </div>
+                                    <div class="comp-contact-info-item">
+                                        <span class="comp-contact-info-label">网址：</span>www.kinsana.cn
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="comp-contact-bottom">
+                                <img class="comp-contact-qr" src="./img/contact/c1.png" alt="二维码">
+                                <div class="comp-contact-bottom-text">
+                                    <span>信息追踪</span>
+                                    <span>京信药业手机站</span>
+                                    <span>获取关于京信的最新消息与资讯</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="contact-page" id="page1">
+                        <div class="comp-msg-welcome">欢迎留言，我们会尽快与您取得联系！</div>
+
+                        <div class="comp-msg-field">
+                            <label class="comp-msg-label"><span class="comp-msg-required">*</span>姓名</label>
+                            <input class="comp-msg-input" id="msgName" placeholder="请输入姓名">
+                        </div>
+
+                        <div class="comp-msg-field">
+                            <label class="comp-msg-label"><span class="comp-msg-required">*</span>手机号</label>
+                            <input class="comp-msg-input" id="msgPhone" placeholder="请输入手机号">
+                        </div>
+
+                        <div class="comp-msg-field">
+                            <label class="comp-msg-label"><span class="comp-msg-required">*</span>邮箱</label>
+                            <input class="comp-msg-input" id="msgEmail" placeholder="请输入邮箱">
+                        </div>
+
+                        <div class="comp-msg-field">
+                            <label class="comp-msg-label"><span class="comp-msg-required">*</span>验证码</label>
+                            <div class="comp-msg-captcha-wrap">
+                                <input class="comp-msg-input" id="msgCaptcha" placeholder="请输入验证码">
+                                <!-- <canvas class="comp-msg-captcha-img" id="captchaCanvas"></canvas> -->
+                            </div>
+                        </div>
+
+                        <div class="comp-msg-field" style="align-items:flex-start;">
+                            <label class="comp-msg-label" style="padding-top:8px;"><span
+                                    class="comp-msg-required">*</span>内容</label>
+                            <textarea class="comp-msg-textarea" id="msgContent" placeholder="请输入留言内容"></textarea>
+                        </div>
+
+                        <button class="comp-msg-submit" id="msgSubmit">提交</button>
+                    </div>
+
+                </div>
+            </div>
+
+        </div>
+    </main>
+
+    <div class="comp-msg-toast" id="globalToast"></div>
+
+    <script src="./lib/jquery4.0.0.min.js"></script>
+    <script src="./lib/popper.min.js"></script>
+    <script src="./lib/bootstrap.min.js"></script>
+    <script src="./js/mod_header.js"></script>
+    <script src="./js/mod_footer.js"></script>
+    <script src="./js/utils_captcha.js"></script>
+
+    <script>
+        (function () {
+            'use strict';
+
+            const leftNavEls = document.querySelectorAll('.left-nav div');
+            const mobileNavGroup = document.getElementById('mobileNavGroup');
+            const pages = {
+                page0: document.getElementById('page0'),
+                page1: document.getElementById('page1')
+            };
+            const toast = document.getElementById('globalToast');
+
+            var urlParams = new URLSearchParams(location.search);
+            var targetIndex = parseInt(urlParams.get('index'), 10);
+
+            function switchPage(targetId) {
+                Object.keys(pages).forEach(function (key) {
+                    pages[key].classList.remove('active');
+                });
+
+                if (pages[targetId]) {
+                    pages[targetId].classList.add('active');
+                }
+
+                leftNavEls.forEach(function (el) {
+                    el.classList.remove('active');
+                    if (el.dataset.target === targetId) {
+                        el.classList.add('active');
+                    }
+                });
+
+                var mobileBtns = mobileNavGroup.querySelectorAll('.btn');
+                mobileBtns.forEach(function (btn) {
+                    btn.classList.remove('active');
+                    if (btn.dataset.target === targetId) {
+                        btn.classList.add('active');
+                    }
+                });
+
+                if (targetId === 'page0') {
+                    loadBaiduMap();
+                }
+            }
+
+            leftNavEls.forEach(function (el) {
+                el.addEventListener('click', function () {
+                    var target = this.dataset.target;
+                    if (target) switchPage(target);
+                });
+            });
+
+            mobileNavGroup.addEventListener('click', function (e) {
+                var btn = e.target.closest('.btn');
+                if (!btn) return;
+                var target = btn.dataset.target;
+                if (target) switchPage(target);
+            });
+
+            function showToast(msg) {
+                toast.textContent = msg;
+                toast.classList.add('show');
+                clearTimeout(toast._timer);
+                toast._timer = setTimeout(function () {
+                    toast.classList.remove('show');
+                }, 2000);
+            }
+
+            var mapLoaded = false;
+
+            function loadBaiduMap() {
+                if (mapLoaded) return;
+                var container = document.getElementById('contactBaiduMap');
+                if (!container || container._mapLoaded) return;
+
+                var src =
+                    'http://api.map.baidu.com/api?v=3.0&ak=CGZX7LEwyL1jswgFdTqAkCcFvywXu5gP&callback=_initBaiduMap';
+
+                window._initBaiduMap = function () {
+                    var map = new BMap.Map('contactBaiduMap');
+                    var point = new BMap.Point(116.4809528827, 37.1964609074);
+                    map.centerAndZoom(point, 16);
+                    map.enableScrollWheelZoom();
+                    var marker = new BMap.Marker(point);
+                    map.addOverlay(marker);
+                    container._mapLoaded = true;
+                    mapLoaded = true;
+                    delete window._initBaiduMap;
+                };
+
+                if (window.BMap) {
+                    window._initBaiduMap();
+                    return;
+                }
+
+                var script = document.createElement('script');
+                script.src = src;
+                document.head.appendChild(script);
+            }
+
+            var captchaInstance = null;
+            var captchaWrap = document.querySelector('.comp-msg-captcha-wrap');
+
+            if (captchaWrap) {
+                captchaInstance = window.Captcha(captchaWrap);
+            }
+
+            function getCaptchaCode() {
+                return captchaInstance ? captchaInstance.getCode() : '';
+            }
+
+            function refreshCaptcha() {
+                if (captchaInstance) captchaInstance.refresh();
+            }
+
+            var submitBtn = document.getElementById('msgSubmit');
+            if (submitBtn) {
+                submitBtn.addEventListener('click', function () {
+                    var name = document.getElementById('msgName').value.trim();
+                    var phone = document.getElementById('msgPhone').value.trim();
+                    var email = document.getElementById('msgEmail').value.trim();
+                    var captcha = document.getElementById('msgCaptcha').value.trim();
+                    var content = document.getElementById('msgContent').value.trim();
+
+                    if (!name || !phone || !email || !captcha || !content) {
+                        showToast('请填写所有必填项');
+                        return;
+                    }
+
+                    if (captcha.toLowerCase() !== getCaptchaCode().toLowerCase()) {
+                        showToast('验证码错误');
+                        refreshCaptcha();
+                        document.getElementById('msgCaptcha').value = '';
+                        return;
+                    }
+
+                    showToast('提交成功');
+                    document.getElementById('msgName').value = '';
+                    document.getElementById('msgPhone').value = '';
+                    document.getElementById('msgEmail').value = '';
+                    document.getElementById('msgCaptcha').value = '';
+                    document.getElementById('msgContent').value = '';
+                    refreshCaptcha();
+                });
+            }
+
+            if (!isNaN(targetIndex) && targetIndex >= 0 && targetIndex < 2) {
+                switchPage('page' + targetIndex);
+            } else {
+                switchPage('page0');
+            }
+
+        })();
+    </script>
+
+</body>
+
+</html>

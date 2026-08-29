@@ -1,0 +1,554 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>产品详情</title>
+    <link rel="stylesheet" href="./style/bootstrap.min.css">
+    <link rel="stylesheet" href="./style/header.css">
+    <link rel="stylesheet" href="./style/footer.css">
+    <link rel="shortcut icon" href="./img/favicon.png" type="image/x-icon">
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            background: #ebebeb;
+            font-family: Arial, Helvetica, sans-serif;
+        }
+
+        img {
+            display: block;
+        }
+
+        #main {
+            width: 1200px;
+            margin: 20px auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+        }
+
+        #main .l {
+            width: 25%;
+            background: #fff;
+            padding: 20px;
+            position: relative;
+            display: flex;
+            flex-direction: column;
+        }
+
+        #main .l .big {
+            width: 100%;
+            height: auto;
+        }
+
+        #main .l .small {
+            width: 55px;
+            height: auto;
+            margin-left: 20px;
+        }
+
+        .left-nav {
+            position: absolute;
+            right: 70px;
+            top: 140px;
+            display: flex;
+            flex-direction: column;
+            gap: 25px;
+            font-weight: bold;
+        }
+
+        .left-nav div {
+            cursor: pointer;
+            transition: color 0.2s;
+        }
+
+        .left-nav div:hover {
+            color: #0081a2;
+        }
+
+        #main .r {
+            width: 73%;
+            background: #fff;
+            padding: 20px;
+            min-height: 600px;
+        }
+
+        .detail-top {
+            display: flex;
+            gap: 24px;
+        }
+
+        .detail-main-img {
+            width: 50%;
+            max-height: 283px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border: 1px solid #eee;
+            padding: 16px;
+            flex-shrink: 0;
+        }
+
+        .detail-main-img img {
+            max-width: 100%;
+            max-height: 251px;
+            object-fit: contain;
+        }
+
+        .detail-info {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+
+        .detail-info-title {
+            font-size: 18px;
+            font-weight: bold;
+            color: #333;
+        }
+
+        .detail-info-row {
+            font-size: 14px;
+            color: #666;
+        }
+
+        .thumb-slider {
+            width: 50%;
+            height: 80px;
+            display: flex;
+            align-items: center;
+            margin-top: 12px;
+            position: relative;
+            user-select: none;
+        }
+
+        .thumb-slider .arrow {
+            width: 24px;
+            height: 80px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: #f5f5f5;
+            cursor: pointer;
+            font-size: 16px;
+            color: #666;
+            flex-shrink: 0;
+            transition: background 0.2s;
+        }
+
+        .thumb-slider .arrow:hover {
+            background: #ddd;
+        }
+
+        .thumb-list {
+            flex: 1;
+            display: flex;
+            gap: 8px;
+            justify-content: center;
+            overflow: hidden;
+            padding: 0 8px;
+        }
+
+        .thumb-list img {
+            width: 70px;
+            height: 70px;
+            object-fit: contain;
+            border: 2px solid transparent;
+            cursor: pointer;
+            padding: 4px;
+            transition: border-color 0.2s;
+        }
+
+        .thumb-list img.active {
+            border-color: #0081a2;
+        }
+
+        .detail-table {
+            width: 58%;
+            margin-top: 24px;
+            border-collapse: collapse;
+        }
+
+        .detail-table td {
+            border: 2px solid #000;
+            font-size: 14px;
+            color: #333;
+            line-height: 1.8;
+            padding: 4px 12px;
+        }
+
+        .detail-table .table-header td {
+            text-align: center;
+            font-weight: bold;
+        }
+
+        .detail-pager {
+            margin-top: 20px;
+            font-size: 13px;
+            color: #666;
+            line-height: 2;
+        }
+
+        .detail-pager-item {
+            cursor: pointer;
+            transition: color 0.2s;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+        }
+
+        .detail-pager-item:hover {
+            color: #0081a2;
+        }
+
+        .detail-pager-item.disabled {
+            color: #ccc;
+            cursor: default;
+        }
+
+        .detail-pager-item.disabled:hover {
+            color: #ccc;
+        }
+
+        .back-btn {
+            display: inline-block;
+            margin-top: 16px;
+            padding: 6px 20px;
+            background: #0081a2;
+            color: #fff;
+            border: none;
+            border-radius: 4px;
+            font-size: 13px;
+            cursor: pointer;
+            transition: background 0.2s;
+            text-decoration: none;
+        }
+
+        .back-btn:hover {
+            background: #006b88;
+            color: #fff;
+        }
+
+        @media (max-width: 991px) {
+            #main {
+                width: 100%;
+                padding: 0 16px;
+                flex-direction: column;
+            }
+
+            #main .l {
+                display: none;
+            }
+
+            #main .r {
+                width: 100%;
+                min-height: auto;
+            }
+
+            .detail-top {
+                flex-direction: column;
+            }
+
+            .detail-main-img {
+                width: 100%;
+            }
+
+            .thumb-slider {
+                width: 100%;
+            }
+
+            .detail-table {
+                width: 100%;
+            }
+
+            #pageBanner {
+                margin-top: 0 !important;
+            }
+        }
+
+        @media (max-width: 575px) {
+            #main {
+                padding: 0 10px;
+            }
+
+            #main .r {
+                padding: 14px;
+            }
+
+            .detail-info-title {
+                font-size: 16px;
+            }
+
+            .thumb-list img {
+                width: 56px;
+                height: 56px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <div id="app"></div>
+    <img id="pageBanner" src="./img/main01.png" class="w-100" alt="横幅" style="margin-top:-70px">
+
+    <main id="main">
+        <div class="l">
+            <img class="big" id="sidebarBig" src="./img/product/product.png" alt="">
+            <img class="small" id="sidebarSmall" src="./img/product/productTree.png" alt="">
+            <div class="left-nav" id="leftNav">
+                <div data-index="0">牛羊用产品</div>
+                <div data-index="1">猪用产品</div>
+                <div data-index="2">宠物用产品</div>
+                <div data-index="3">家禽用产品</div>
+                <div data-index="4">水产用产品</div>
+            </div>
+        </div>
+        <div class="r" id="contentArea"></div>
+    </main>
+
+    <script src="./lib/popper.min.js"></script>
+    <script src="./lib/bootstrap.min.js"></script>
+    <script src="./js/mod_header.js"></script>
+    <script src="./js/mod_footer.js"></script>
+
+    <script>
+        (function () {
+            'use strict';
+
+            if ('scrollRestoration' in history) history.scrollRestoration = 'manual';
+            window.scrollTo(0, 0);
+
+            var detailData = JSON.parse(localStorage.getItem('pageDetail'));
+            var detailList = JSON.parse(localStorage.getItem('pageDetailList')) || [];
+
+            if (!detailData || detailData.from !== '产品展厅') {
+                location.href = './product.html';
+                return;
+            }
+
+            var rEl = document.getElementById('contentArea');
+
+            var leftNavEls = document.querySelectorAll('.left-nav div');
+            leftNavEls.forEach(function (el, index) {
+                el.addEventListener('click', function () {
+                    localStorage.setItem('productCategoryIndex', index);
+                    location.href = './product.html';
+                });
+            });
+
+            function renderDetail() {
+                // 顶部：主图 + 信息
+                var topDiv = document.createElement('div');
+                topDiv.className = 'detail-top';
+
+                var mainImgWrap = document.createElement('div');
+                mainImgWrap.className = 'detail-main-img';
+                var mainImg = document.createElement('img');
+                mainImg.src = './img/product/' + (detailData.img || '');
+                mainImg.alt = detailData.name || '';
+                mainImg.onerror = function () {
+                    this.src = './img/news/404.png';
+                };
+                mainImgWrap.appendChild(mainImg);
+                topDiv.appendChild(mainImgWrap);
+
+                var infoDiv = document.createElement('div');
+                infoDiv.className = 'detail-info';
+
+                var infoTitle = document.createElement('div');
+                infoTitle.className = 'detail-info-title';
+                infoTitle.textContent = (detailData.name || '') + '  ' + (detailData.detailName || '');
+                infoDiv.appendChild(infoTitle);
+
+                var infoRows = [
+                    { label: '规格', value: detailData.per },
+                    { label: '分类', value: detailData.ps }
+                ];
+                infoRows.forEach(function (row) {
+                    if (row.value) {
+                        var r = document.createElement('div');
+                        r.className = 'detail-info-row';
+                        r.textContent = row.label + '：' + row.value;
+                        infoDiv.appendChild(r);
+                    }
+                });
+
+                topDiv.appendChild(infoDiv);
+                rEl.appendChild(topDiv);
+
+                // 缩略图
+                if (detailData.imgArr && detailData.imgArr.length > 1) {
+                    var slider = document.createElement('div');
+                    slider.className = 'thumb-slider';
+
+                    var leftArrow = document.createElement('div');
+                    leftArrow.className = 'arrow';
+                    leftArrow.textContent = '<';
+
+                    var thumbList = document.createElement('div');
+                    thumbList.className = 'thumb-list';
+
+                    var rightArrow = document.createElement('div');
+                    rightArrow.className = 'arrow';
+                    rightArrow.textContent = '>';
+
+                    var currentThumb = 0;
+
+                    detailData.imgArr.forEach(function (imgName, i) {
+                        var thumb = document.createElement('img');
+                        thumb.src = './img/product/' + imgName;
+                        thumb.alt = detailData.name;
+                        if (i === 0) thumb.classList.add('active');
+                        thumb.addEventListener('click', function () {
+                            switchThumb(i);
+                        });
+                        thumbList.appendChild(thumb);
+                    });
+
+                    function switchThumb(index) {
+                        var thumbs = thumbList.querySelectorAll('img');
+                        if (index < 0 || index >= thumbs.length) return;
+                        thumbs[currentThumb].classList.remove('active');
+                        currentThumb = index;
+                        thumbs[currentThumb].classList.add('active');
+                        mainImg.src = './img/product/' + detailData.imgArr[currentThumb];
+                    }
+
+                    leftArrow.addEventListener('click', function () {
+                        switchThumb(currentThumb - 1);
+                    });
+                    rightArrow.addEventListener('click', function () {
+                        switchThumb(currentThumb + 1);
+                    });
+
+                    slider.appendChild(leftArrow);
+                    slider.appendChild(thumbList);
+                    slider.appendChild(rightArrow);
+                    rEl.appendChild(slider);
+                }
+
+                // 说明书（文本）
+                if (detailData.manu && detailData.manu.length) {
+                    var table = document.createElement('table');
+                    table.className = 'detail-table';
+
+                    var headerTr = document.createElement('tr');
+                    headerTr.className = 'table-header';
+                    var headerTd = document.createElement('td');
+                    headerTd.textContent = (detailData.detailName || detailData.name) + '说明书';
+                    headerTr.appendChild(headerTd);
+                    table.appendChild(headerTr);
+
+                    detailData.manu.forEach(function (line) {
+                        var tr = document.createElement('tr');
+                        var td = document.createElement('td');
+                        td.textContent = line;
+                        tr.appendChild(td);
+                        table.appendChild(tr);
+                    });
+                    rEl.appendChild(table);
+                }
+
+                // 说明书（图片）
+                if (detailData.manuImg && detailData.manuImg.length) {
+                    var manuImgWrap = document.createElement('div');
+                    manuImgWrap.style.marginTop = '24px';
+                    detailData.manuImg.forEach(function (imgName) {
+                        var img = document.createElement('img');
+                        img.src = './img/product/' + imgName;
+                        img.alt = detailData.name;
+                        img.style.cssText = 'max-width:100%;display:block;margin-bottom:12px;border:1px solid #eee;border-radius:4px;';
+                        img.onerror = function () { this.style.display = 'none'; };
+                        manuImgWrap.appendChild(img);
+                    });
+                    rEl.appendChild(manuImgWrap);
+                }
+
+                // 上一篇 / 下一篇
+                var pager = createPager();
+                if (pager) rEl.appendChild(pager);
+
+                // 返回按钮
+                var backBtn = document.createElement('a');
+                backBtn.className = 'back-btn';
+                backBtn.textContent = '← 返回产品列表';
+                backBtn.href = './product.html';
+                rEl.appendChild(backBtn);
+            }
+
+            // 上一篇/下一篇
+            function createPager() {
+                if (detailList.length === 0) return null;
+
+                function getDisplayName(item) {
+                    return item.name || item.detailName || '';
+                }
+
+                var matchKey = 'name';
+                var curIndex = -1;
+                for (var i = 0; i < detailList.length; i++) {
+                    var currentItem = detailList[i];
+                    if (currentItem.name === detailData.name ||
+                        currentItem.detailName === detailData.detailName) {
+                        curIndex = i;
+                        break;
+                    }
+                }
+
+                if (curIndex === -1) {
+                    for (var i = 0; i < detailList.length; i++) {
+                        if (detailList[i].name === detailData.name) {
+                            curIndex = i;
+                            break;
+                        }
+                    }
+                }
+
+                var prevItem = curIndex > 0 ? detailList[curIndex - 1] : null;
+                var nextItem = (curIndex >= 0 && curIndex < detailList.length - 1) ? detailList[curIndex + 1] : null;
+
+                var pager = document.createElement('div');
+                pager.className = 'detail-pager';
+
+                var prevEl = document.createElement('div');
+                prevEl.className = 'detail-pager-item' + (prevItem ? '' : ' disabled');
+                prevEl.textContent = '上一篇：' + (prevItem ? getDisplayName(prevItem) : '没有了');
+                if (prevItem) {
+                    prevEl.addEventListener('click', function () {
+                        localStorage.setItem('pageDetail', JSON.stringify(prevItem));
+                        location.reload();
+                    });
+                }
+
+                var nextEl = document.createElement('div');
+                nextEl.className = 'detail-pager-item' + (nextItem ? '' : ' disabled');
+                nextEl.textContent = '下一篇：' + (nextItem ? getDisplayName(nextItem) : '没有了');
+                if (nextItem) {
+                    nextEl.addEventListener('click', function () {
+                        localStorage.setItem('pageDetail', JSON.stringify(nextItem));
+                        location.reload();
+                    });
+                }
+
+                pager.appendChild(prevEl);
+                pager.appendChild(nextEl);
+                return pager;
+            }
+
+            renderDetail();
+
+        })();
+    </script>
+
+</body>
+
+</html>
