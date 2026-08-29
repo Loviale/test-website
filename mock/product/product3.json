@@ -1,0 +1,404 @@
+[
+    {
+        "from": "产品展厅",
+        "name": "宠肤",
+        "detailName": "伊维菌素溶液",
+        "per": "50ml/瓶*96盒/件",
+        "ps": "口服液",
+        "img": "c01.png",
+        "imgArr": [
+            "c01.png"
+        ],
+        "manu": [],
+        "manuImg": []
+    },
+    {
+        "from": "产品展厅",
+        "name": "液状石蜡",
+        "detailName": "",
+        "per": "50ml/瓶*12瓶/包*16包/件",
+        "ps": "口服液",
+        "img": "c02.png",
+        "imgArr": [
+            "c02.png"
+        ],
+        "manu": [],
+        "manuImg": [
+            "c03.png"
+        ]
+    },
+    {
+        "from": "产品展厅",
+        "name": "硼葡萄糖酸钙溶液",
+        "detailName": "",
+        "per": "50ml/瓶*12瓶/包*16包/件",
+        "ps": "口服液",
+        "img": "c04.png",
+        "imgArr": [
+            "c04.png"
+        ],
+        "manu": [],
+        "manuImg": [
+            "c05.png"
+        ]
+    },
+    {
+        "from": "产品展厅",
+        "name": "中抗动碘",
+        "detailName": "碘",
+        "per": "5% 50ml/瓶",
+        "ps": "消毒剂",
+        "img": "c06.png",
+        "imgArr": [
+            "c06.png"
+        ],
+        "manu": [],
+        "manuImg": []
+    },
+    {
+        "from": "产品展厅",
+        "name": "中抗庆福",
+        "detailName": "硫酸庆大霉素注射液",
+        "per": "2ml:0.08g/支*10支/盒",
+        "ps": "小容量注射液",
+        "img": "c07.png",
+        "imgArr": [
+            "c07.png"
+        ],
+        "manu": [],
+        "manuImg": []
+    },
+    {
+        "from": "产品展厅",
+        "name": "中抗诺美",
+        "detailName": "硫酸阿托品注射液",
+        "per": "2ml:1mg/支*2支/盒",
+        "ps": "小容量注射液",
+        "img": "c08.png",
+        "imgArr": [
+            "c08.png"
+        ],
+        "manu": [],
+        "manuImg": []
+    },
+    {
+        "from": "产品展厅",
+        "name": "中抗氟泰",
+        "detailName": "氟苯尼考注射液",
+        "per": "5ml:0.25g/支*2支/盒",
+        "ps": "小容量注射液",
+        "img": "c09.png",
+        "imgArr": [
+            "c09.png"
+        ],
+        "manu": [],
+        "manuImg": []
+    },
+    {
+        "from": "产品展厅",
+        "name": "中诺止血宁",
+        "detailName": "酚磺乙胺注射液",
+        "per": "2ml:0.25g/支*2支/盒",
+        "ps": "小容量注射液",
+        "img": "c10.png",
+        "imgArr": [
+            "c10.png"
+        ],
+        "manu": [],
+        "manuImg": []
+    },
+    {
+        "from": "产品展厅",
+        "name": "舒畅",
+        "detailName": "鱼腥草注射液",
+        "per": "2ml:4g/支*2支/盒",
+        "ps": "小容量注射液",
+        "img": "c11.png",
+        "imgArr": [
+            "c11.png"
+        ],
+        "manu": [],
+        "manuImg": []
+    },
+    {
+        "from": "产品展厅",
+        "name": "绦血宁",
+        "detailName": "吡喹酮片",
+        "per": "0.2*1片/袋*2袋/盒*15盒/包*27包/件",
+        "ps": "片剂",
+        "img": "c12.png",
+        "imgArr": [
+            "c12.png"
+        ],
+        "manu": [],
+        "manuImg": [
+            "c13.png"
+        ]
+    },
+    {
+        "from": "产品展厅",
+        "name": "",
+        "detailName": "阿苯达唑片",
+        "per": "25mg*6片/袋*2袋/盒*15盒/包*27包/件",
+        "ps": "片剂",
+        "img": "c14.png",
+        "imgArr": [
+            "c14.png"
+        ],
+        "manu": [],
+        "manuImg": [
+            "c15.png"
+        ]
+    },
+    {
+        "from": "产品展厅",
+        "name": "宠可康",
+        "detailName": "盐酸林可霉素注射液",
+        "per": "2ml 2支/盒*10盒/包*20包/件（西林瓶）",
+        "ps": "小容量注射液",
+        "img": "c16.png",
+        "imgArr": [
+            "c16.png"
+        ],
+        "manu": [],
+        "manuImg": [
+            "c17.png"
+        ]
+    },
+    {
+        "from": "产品展厅",
+        "name": "宠诺",
+        "detailName": "烟酸诺氟沙星注射液",
+        "per": "2ml 2支/盒*10盒/包*20包/件（西林瓶）",
+        "ps": "小容量注射液",
+        "img": "c18.png",
+        "imgArr": [
+            "c18.png"
+        ],
+        "manu": [],
+        "manuImg": [
+            "c19.png"
+        ]
+    },
+    {
+        "from": "产品展厅",
+        "name": "止血康注射液",
+        "detailName": "酚磺乙胺",
+        "per": "10ml/支*3支/盒*120盒/箱",
+        "ps": "小容量注射液",
+        "img": "c20.png",
+        "imgArr": [
+            "c20.png"
+        ],
+        "manu": [],
+        "manuImg": [
+            "c21.png"
+        ]
+    },
+    {
+        "from": "产品展厅",
+        "name": "林格氏液",
+        "detailName": "复方氯化钠注射液",
+        "per": "500ml:0.9g(0.9%盐水)氯化钠 30瓶/件",
+        "ps": "大输液",
+        "img": "c22.png",
+        "imgArr": [
+            "c22.png"
+        ],
+        "manu": [], 
+        "manuImg": [
+            "c23.png"
+        ]
+    },
+    {
+        "from": "产品展厅",
+        "name": "康力",
+        "detailName": "葡萄糖注射液 5%糖",
+        "per": "100ml:5g(5%糖)100瓶/件",
+        "ps": "大输液",
+        "img": "c24.png",
+        "imgArr": [
+            "c24.png"
+        ],
+        "manu": [],
+        "manuImg": [
+            "c25.png"
+        ]
+    },
+    {
+        "from": "产品展厅",
+        "name": "康力",
+        "detailName": "葡萄糖注射液 10%糖",
+        "per": "100ml葡萄糖10g10%糖|100瓶/件",
+        "ps": "大输液",
+        "img": "c26.png",
+        "imgArr": [
+            "c26.png"
+        ],
+        "manu": [],
+        "manuImg": [
+            "c27.png"
+        ]
+    },
+    {
+        "from": "产品展厅",
+        "name": "爱力",
+        "detailName": "氯化钠注射液",
+        "per": "（100ml:0.9g（0.9%盐水）氯化钠 100瓶/件",
+        "ps": "大输液",
+        "img": "c28.png",
+        "imgArr": [
+            "c28.png"
+        ],
+        "manu": [],
+        "manuImg": [
+            "c29.png"
+        ]
+    },
+    {
+        "from": "产品展厅",
+        "name": "爱可力",
+        "detailName": "葡萄糖氯化钠注射液",
+        "per": "100ml:氯化钠0.9g葡萄糖5g 100瓶/件",
+        "ps": "大输液",
+        "img": "c30.png",
+        "imgArr": [
+            "c30.png"
+        ],
+        "manu": [],
+        "manuImg": [
+            "c31.png"
+        ]
+    },
+    {
+        "from": "产品展厅",
+        "name": "聚维酮碘溶液 喷剂",
+        "detailName": "",
+        "per": "50ml/瓶*12瓶/包*16包/件",
+        "ps": "消毒剂",
+        "img": "c32.png",
+        "imgArr": [
+            "c32.png"
+        ],
+        "manu": [],
+        "manuImg": [
+            "c33.png"
+        ]
+    },
+    {
+        "from": "产品展厅",
+        "name": "灭菌注射用水",
+        "detailName": "",
+        "per": "10ml/支*10支/盒*60盒/件",
+        "ps": "小容量注射液",
+        "img": "c34.png",
+        "imgArr": [
+            "c34.png"
+        ],
+        "manu": [],
+        "manuImg": []
+    },
+    {
+        "from": "产品展厅",
+        "name": "康力",
+        "detailName": "葡萄糖注射液 10%糖",
+        "per": "500ml葡萄糖10g10%糖|30瓶/件",
+        "ps": "大输液",
+        "img": "c35.png",
+        "imgArr": [
+            "c35.png"
+        ],
+        "manu": [],
+        "manuImg": [
+            "c36.png"
+        ]
+    },
+    {
+        "from": "产品展厅",
+        "name": "爱力",
+        "detailName": "氯化钠注射液 0.9%盐",
+        "per": "（500ml:0.9g（0.9%盐水）氯化钠 30瓶/件",
+        "ps": "大输液",
+        "img": "c37.png",
+        "imgArr": [
+            "c37.png"
+        ],
+        "manu": [],
+        "manuImg": [
+            "c38.png"
+        ]
+    },
+    {
+        "from": "产品展厅",
+        "name": "爱可力",
+        "detailName": "葡萄糖氯化钠注射液",
+        "per": "500ml:氯化钠0.9g葡萄糖5g 30瓶/件",
+        "ps": "大输液",
+        "img": "c39.png",
+        "imgArr": [
+            "c39.png"
+        ],
+        "manu": [],
+        "manuImg": [
+            "c40.png"
+        ]
+    },
+    {
+        "from": "产品展厅",
+        "name": "康力",
+        "detailName": "葡萄糖注射液 5%糖",
+        "per": "500ml:5g(5%糖)30瓶/件",
+        "ps": "大输液",
+        "img": "c41.png",
+        "imgArr": [
+            "c41.png"
+        ],
+        "manu": [],
+        "manuImg": [
+            "c42.png"
+        ]
+    },
+    {
+        "from": "产品展厅",
+        "name": "沃塞",
+        "detailName": "沃塞",
+        "per": "0.1g/支*2支/盒*10盒/包*20包/件",
+        "ps": "粉针类",
+        "img": "c43.png",
+        "imgArr": [
+            "c43.png"
+        ],
+        "manu": [],
+        "manuImg": [
+            "c44.png"
+        ]
+    },
+    {
+        "from": "产品展厅",
+        "name": "沃塞",
+        "detailName": "沃塞",
+        "per": "0.1g/支*10支/盒*60盒/件",
+        "ps": "粉针类",
+        "img": "c45.png",
+        "imgArr": [
+            "c45.png"
+        ],
+        "manu": [],
+        "manuImg": [
+            "c46.png"
+        ]
+    },
+    {
+        "from": "产品展厅",
+        "name": "清开灵",
+        "detailName": "柴胡注射液",
+        "per": "2ml:2g//支*2支/盒",
+        "ps": "小容量注射液",
+        "img": "c47.png",
+        "imgArr": [
+            "c47.png"
+        ],
+        "manu": [],
+        "manuImg": []
+    }
+]
